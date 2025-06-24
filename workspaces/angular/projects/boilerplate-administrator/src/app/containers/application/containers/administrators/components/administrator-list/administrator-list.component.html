@@ -1,0 +1,45 @@
+<div class="table-responsive">
+  <div class="table table-hover table-striped">
+    <div class="thead">
+      <div class="tr">
+        <div class="th">
+          ID
+        </div>
+        <div class="th">
+          Name
+        </div>
+        <div class="th">
+          Email
+        </div>
+        <div class="th">
+          Status
+        </div>
+      </div>
+    </div>
+    <div class="tbody">
+      @for (item of list(); track item) {
+        <a
+          class="tr"
+          [routerLink]="item.id">
+          <div class="td">
+            {{ item.id }}
+          </div>
+          <div class="td">
+            {{ item.name }}
+          </div>
+          <div class="td">
+            {{ item.email }}
+          </div>
+          <div class="td">
+            <span
+              class="badge"
+              [class.badge-green]="item.status === true"
+              [class.badge-red]="item.status === false">
+              {{ item.status | status }}
+            </span>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</div>

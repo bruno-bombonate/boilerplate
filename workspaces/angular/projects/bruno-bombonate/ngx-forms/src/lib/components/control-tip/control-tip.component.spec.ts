@@ -8,7 +8,7 @@ describe('ControlTipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ControlTipComponent ]
+      imports: [ControlTipComponent]
     })
     .compileComponents();
 

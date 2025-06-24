@@ -1,0 +1,10 @@
+<h1>
+  {{ activatedRoute.snapshot.title }}
+</h1>
+<div class="card">
+  @if (user() !== undefined) {
+    <app-user-view
+      [item]="user()">
+    </app-user-view>
+  }
+</div>

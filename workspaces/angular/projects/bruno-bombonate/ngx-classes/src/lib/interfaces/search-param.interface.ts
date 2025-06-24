@@ -13,5 +13,6 @@ export enum SearchParamValueType {
 export interface SearchParam {
   name: string,
   type: SearchParamType,
-  valueType: SearchParamValueType
+  valueType: SearchParamValueType,
+  valueDefault?: number | string | boolean
 }

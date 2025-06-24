@@ -1,0 +1,17 @@
+<h1>
+  {{ activatedRoute.snapshot.title }}
+</h1>
+@if (administrator() !== undefined) {
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card">
+        <app-administrator-form
+          [formData]="administrator()"
+          [formLoading]="formLoading()"
+          (formSubmit)="handleFormSubmit($event)">
+        </app-administrator-form>
+      </div>
+    </div>
+  </div>
+}
+  

@@ -3,9 +3,7 @@ import { inject, PLATFORM_ID, Injectable } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 class AuthenticationService {
-    constructor() {
-        this.platformId = inject(PLATFORM_ID);
-    }
+    platformId = inject(PLATFORM_ID);
     setAuthentication(authentication, rememberMe) {
         if (isPlatformBrowser(this.platformId)) {
             authentication = JSON.stringify(authentication);
@@ -43,10 +41,10 @@ class AuthenticationService {
         }
         return isLoggedIn;
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: AuthenticationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: AuthenticationService, providedIn: 'root' }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: AuthenticationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: AuthenticationService, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: AuthenticationService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: AuthenticationService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root'

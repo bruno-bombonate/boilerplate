@@ -17,6 +17,7 @@ npm install @bruno-bombonate/ngx-authentication
 |2.0.0|16.x|
 |3.0.0|17.x|
 |18.0.0|18.x|
+|19.0.0|19.x|
 
 ## Usage
 
@@ -24,7 +25,6 @@ npm install @bruno-bombonate/ngx-authentication
 
 ```typescript
 import { Component, inject } from '@angular/core';
-import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
 import { HttpClient } from '@angular/common/http';
 import { AuthenticationService } from '@bruno-bombonate/ngx-authentication';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -34,24 +34,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.sass']
 })
-export class SignInComponent extends DestroyRefClass {
+export class SignInComponent {
 
   private readonly httpClient = inject(HttpClient);
   private readonly authenticationService = inject(AuthenticationService);
 
-  public formLoading: boolean = false;
+  public readonly formLoading = signal<boolean>(false);
 
   public handleFormSubmit(value: any): void {
-    if (this.formLoading === false) {
-      this.formLoading = true;
+    if (this.formLoading() === false) {
+      this.formLoading.set(true);
       this.httpClient.post('users/sign-in')
-        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (response: any) => {
             this.authenticationService.setAuthentication(response.data, value.rememberMe);
+            this.formLoading.set(false);
           },
           error: (response: any) => {
-            this.formLoading = false;
+            this.formLoading.set(false);
           }
         });
     }

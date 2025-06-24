@@ -17,6 +17,7 @@ npm install @bruno-bombonate/ngx-seo
 |2.0.0|16.x|
 |3.0.0|17.x|
 |18.0.0|18.x|
+|19.0.0|19.x|
 
 ## Usage
 
@@ -49,13 +50,10 @@ export class AppComponent implements OnInit {
 Define route's title and meta description at data object.
 
 ```typescript
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-
-// containers
+import { Routes } from '@angular/router';
 import { PageComponent } from './containers/page/page.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: 'page',
     component: PageComponent,
@@ -67,13 +65,5 @@ const routes: Routes = [
     }
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-  })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
 ```
 

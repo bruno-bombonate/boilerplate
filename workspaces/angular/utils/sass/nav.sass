@@ -1,6 +1,6 @@
 
-@import 'imports/variables'
-@import 'imports/media-queries'
+@use 'imports/variables' as variables
+@use 'imports/media-queries' as media-queries
 
 :host
   display: block
@@ -13,15 +13,15 @@
   left: 0
   display: none
   align-items: center
-  min-width: $MIN_WIDTH
+  min-width: variables.$min-width
   width: 100%
   height: 100%
-  background-color: $COLOR_WHITE
+  background-color: variables.$color-white
   text-align: center
   opacity: 0
   > div
     > div
-      margin: 8px 0px 8px 0px
+      margin: 8px 0px
       &:first-child
         margin-top: 0px
       &:last-child
@@ -33,22 +33,22 @@
   align-items: center
   white-space: nowrap
   .nav-li
-    margin: 4px 0px 4px 0px
+    margin: 4px 0px
     &:first-child
       margin-top: 0px
     &:last-child
       margin-bottom: 0px
     .nav-button
-      padding: 4px 4px 4px 4px
+      padding: 4px
 
 .nav-button
   position: relative
   display: inline-block
   background-color: transparent
   line-height: 1
-  color: $COLOR_BLACK
-  padding: 0px 0px 0px 0px
-  border-width: 0px 0px 0px 0px
+  color: variables.$color-black
+  padding: 0px
+  border-width: 0px
 
 .nav-button-active
   font-weight: 500
@@ -61,14 +61,14 @@
   display: block
   width: 12px
   height: 12px
-  background-color: $COLOR_RED
+  background-color: variables.$color-red
   font-size: 8px
   line-height: 12px
   text-align: center
-  color: $COLOR_WHITE
+  color: variables.$color-white
   border-radius: 100%
 
-@include MQ(LG)
+@include media-queries.MQ(LG)
   .nav
     position: static
     display: block
@@ -77,7 +77,7 @@
     .nav-ul
       flex-direction: row
       .nav-li
-        margin: 0px 4px 0px 4px
+        margin: 0px 4px
         &:first-child
           margin-left: 0px
         &:last-child

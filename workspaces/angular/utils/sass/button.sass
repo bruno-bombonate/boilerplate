@@ -1,46 +1,46 @@
 
-@import 'imports/variables'
+@use 'imports/variables' as variables
 
 .button
   display: inline-block
-  background-color: $COLOR_BLACK
+  background-color: variables.$color-black
   font-size: 14px
   font-weight: 400
   text-align: center
-  color: $COLOR_WHITE
-  padding: 4px 12px 4px 12px
-  border-width: 1px 1px 1px 1px
-  border-radius: 16px 16px 16px 16px
-  border-color: $COLOR_BLACK
+  color: variables.$color-white
+  padding: 4px 12px
+  border-width: 1px
+  border-radius: 16px
+  border-color: variables.$color-black
   transition: background-color 0.25s, opacity 0.25s
   &:hover
-    background-color: $COLOR_BLACK
+    background-color: variables.$color-black
     text-decoration: none
-    color: $COLOR_WHITE
-    border-color: $COLOR_BLACK
+    color: variables.$color-white
+    border-color: variables.$color-black
   &:disabled
     opacity: 0.5
     cursor: not-allowed
 
 .button-white
-  background-color: $COLOR_WHITE
-  color: $COLOR_BLACK
-  border-color: $COLOR_BLACK
+  background-color: variables.$color-white
+  color: variables.$color-black
+  border-color: variables.$color-black
   &:hover
-    background-color: $COLOR_WHITE
-    color: $COLOR_BLACK
-    border-color: $COLOR_BLACK
+    background-color: variables.$color-white
+    color: variables.$color-black
+    border-color: variables.$color-black
 
 .button-green
-  background-color: $COLOR_GREEN
-  border-color: $COLOR_GREEN
+  background-color: variables.$color-green
+  border-color: variables.$color-green
   &:hover
-    background-color: $COLOR_GREEN
-    border-color: $COLOR_GREEN
+    background-color: variables.$color-green
+    border-color: variables.$color-green
 
 .button-red
-  background-color: $COLOR_RED
-  border-color: $COLOR_RED
+  background-color: variables.$color-red
+  border-color: variables.$color-red
   &:hover
-    background-color: $COLOR_RED
-    border-color: $COLOR_RED
+    background-color: variables.$color-red
+    border-color: variables.$color-red

@@ -1,0 +1,24 @@
+<h1>
+  {{ activatedRoute.snapshot.title }}
+</h1>
+<app-user-search-form
+  [formData]="listSearchParams()"
+  (formChange)="handleListSearchFormChange($event)">
+</app-user-search-form>
+<div class="card">
+  @if (listLoading() === true) {
+    <p class="fw-light text-center mb-0">
+      Loading...
+    </p>
+  } @else {
+    @if (list().length === 0) {
+      <p class="fw-light text-center mb-0">
+        No user found.
+      </p>
+    } @else {
+      <app-user-list
+        [list]="list()">
+      </app-user-list>
+    }
+  }
+</div>

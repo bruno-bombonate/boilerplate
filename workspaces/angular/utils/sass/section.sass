@@ -1,12 +1,12 @@
 
-@import 'imports/media-queries.sass'
+@use 'imports/media-queries.sass' as media-queries
 
 .section
   padding: 24px (24px - 12px)
-  @include MQ(MD)
+  @include media-queries.MQ(MD)
     padding: 32px (32px - 12px)
 
 .section-small
   padding: 12px (24px - 12px)
-  @include MQ(LG)
+  @include media-queries.MQ(LG)
     padding: 24px (24px - 12px)

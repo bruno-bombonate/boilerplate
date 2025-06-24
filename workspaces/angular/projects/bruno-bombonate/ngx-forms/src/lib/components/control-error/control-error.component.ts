@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, input, computed } from '@angular/core';
 import { FormsService } from '../../services/forms.service';
 import { ControlErrors } from '../../interfaces/control-errors.interface';
 
 @Component({
   selector: 'control-error',
+  imports: [],
   templateUrl: './control-error.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -11,11 +12,12 @@ export class ControlErrorComponent {
 
   private readonly formsService = inject(FormsService);
 
-  @Input()
-  public controlErrors: null | ControlErrors = null;
+  public readonly controlErrors = input<null | ControlErrors>(null);
 
-  public get controlErrorMessage(): undefined | string {
-    const controlErrors = this.controlErrors;
+  public readonly controlErrorMessage = computed<undefined | string>(() => {
+
+    const controlErrors = this.controlErrors();
+
     if (controlErrors !== null) {
       for (const key in controlErrors) {
         const controlError = this.formsService.controlErrors[key];
@@ -26,6 +28,7 @@ export class ControlErrorComponent {
       }
     }
     return undefined;
-  }
+
+  });
 
 }

@@ -1,6 +1,0 @@
-export var ToastType;
-(function (ToastType) {
-    ToastType["Success"] = "success";
-    ToastType["Error"] = "error";
-})(ToastType || (ToastType = {}));
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidG9hc3QuaW50ZXJmYWNlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvYnJ1bm8tYm9tYm9uYXRlL25neC10b2FzdC9zcmMvbGliL2ludGVyZmFjZXMvdG9hc3QuaW50ZXJmYWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBLE1BQU0sQ0FBTixJQUFZLFNBR1g7QUFIRCxXQUFZLFNBQVM7SUFDbkIsZ0NBQW1CLENBQUE7SUFDbkIsNEJBQWUsQ0FBQTtBQUNqQixDQUFDLEVBSFcsU0FBUyxLQUFULFNBQVMsUUFHcEIiLCJzb3VyY2VzQ29udGVudCI6WyJcclxuZXhwb3J0IGVudW0gVG9hc3RUeXBlIHtcclxuICBTdWNjZXNzID0gJ3N1Y2Nlc3MnLFxyXG4gIEVycm9yID0gJ2Vycm9yJ1xyXG59XHJcblxyXG5leHBvcnQgaW50ZXJmYWNlIFRvYXN0IHtcclxuICB0eXBlOiBUb2FzdFR5cGU7XHJcbiAgbWVzc2FnZTogc3RyaW5nO1xyXG59XHJcbiJdfQ==

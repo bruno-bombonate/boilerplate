@@ -1,0 +1,71 @@
+<header class="header section section-small">
+  <div class="container-fluid h-100">
+    <div class="row align-items-center h-100">
+      <div class="col col-lg-auto">
+        Boilerplate
+      </div>
+      <div class="col-auto col-lg">
+        <button
+          type="button"
+          class="nav-button-open"
+          (click)="navOpen()">
+          <span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <nav #nav
+          class="nav"
+          (click)="navClose()">
+          <div class="nav-ul">
+            <div class="nav-li">
+              <a
+                class="nav-button"
+                [routerLink]="'dashboard'"
+                [routerLinkActive]="'nav-button-active'">
+                Dashboard
+              </a>
+            </div>
+            <div class="nav-li">
+              <a
+                class="nav-button"
+                [routerLink]="'users'"
+                [routerLinkActive]="'nav-button-active'">
+                Users
+              </a>
+            </div>
+            <div class="nav-li">
+              <a
+                class="nav-button"
+                [routerLink]="'administrators'"
+                [routerLinkActive]="'nav-button-active'">
+                Administrators
+              </a>
+            </div>
+            @if (userService.user !== undefined) {
+              <div class="nav-li ms-lg-auto">
+                <a
+                  class="nav-button"
+                  [routerLink]="'profile'"
+                  [routerLinkActive]="'nav-button-active'">
+                  {{ userService.user.name }}
+                </a>
+              </div>
+            }
+          </div>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <router-outlet>
+        </router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

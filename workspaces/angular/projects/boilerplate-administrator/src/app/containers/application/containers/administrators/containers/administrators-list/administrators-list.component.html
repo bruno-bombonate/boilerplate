@@ -1,0 +1,35 @@
+<div class="row align-items-center mb-3">
+  <div class="col">
+    <h1 class="mb-0">
+      {{ activatedRoute.snapshot.title }}
+    </h1>
+  </div>
+  <div class="col-auto">
+    <a
+      class="button"
+      [routerLink]="'add'">
+      Add
+    </a>
+  </div>
+</div>
+<app-administrator-search-form
+  [formData]="listSearchParams()"
+  (formChange)="handleListSearchFormChange($event)">
+</app-administrator-search-form>
+<div class="card">
+  @if (listLoading() === true) {
+    <p class="fw-light text-center mb-0">
+      Loading...
+    </p>
+  } @else {
+    @if (list().length === 0) {
+      <p class="fw-light text-center mb-0">
+        No administrator found.
+      </p>
+    } @else {
+      <app-administrator-list
+        [list]="list()">
+      </app-administrator-list>
+    }
+  }
+</div>

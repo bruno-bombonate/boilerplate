@@ -1,7 +1,5 @@
 import * as i0 from '@angular/core';
-import { Injectable, inject, ElementRef, Component, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
+import { Injectable, inject, ElementRef, DestroyRef, signal, ChangeDetectionStrategy, Component } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import gsap from 'gsap';
@@ -13,9 +11,7 @@ var ToastType;
 })(ToastType || (ToastType = {}));
 
 class ToastService {
-    constructor() {
-        this._send = new Subject();
-    }
+    _send = new Subject();
     get send$() {
         return this._send.asObservable();
     }
@@ -28,37 +24,37 @@ class ToastService {
     error(message) {
         this.send = { type: ToastType.Error, message };
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastService, providedIn: 'root' }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ToastService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ToastService, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ToastService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root'
                 }]
         }] });
 
-class ToastComponent extends DestroyRefClass {
-    constructor() {
-        super(...arguments);
-        this.toastService = inject(ToastService);
-        this.elementRef = inject(ElementRef);
-        this.toastAnimationInProgress = false;
-        this.toastAnimationTimeout = undefined;
-        this.toastList = [];
-    }
+class ToastComponent {
+    toastService = inject(ToastService);
+    elementRef = inject(ElementRef);
+    destroyRef = inject(DestroyRef);
+    toastAnimationInProgress = signal(false);
+    toastAnimationTimeout = signal(undefined);
+    toastList = signal([]);
     toastTimelineShow() {
-        if (this.toastAnimationInProgress === false) {
-            this.toastAnimationInProgress = true;
+        const toastAnimationInProgress = this.toastAnimationInProgress();
+        const toastList = this.toastList();
+        if (toastAnimationInProgress === false) {
+            this.toastAnimationInProgress.set(true);
             gsap.to(this.elementRef.nativeElement, {
                 duration: 0.35,
                 y: '0%',
                 onComplete: () => {
-                    this.toastAnimationInProgress = false;
-                    if (this.toastList.length === 1) {
-                        this.toastAnimationTimeout = setTimeout(() => {
+                    this.toastAnimationInProgress.set(false);
+                    if (toastList.length === 1) {
+                        this.toastAnimationTimeout.set(setTimeout(() => {
                             this.toastTimelineHide();
-                        }, 5000);
+                        }, 5000));
                     }
                     else {
                         this.toastTimelineHide();
@@ -68,15 +64,18 @@ class ToastComponent extends DestroyRefClass {
         }
     }
     toastTimelineHide() {
-        if (this.toastAnimationInProgress === false) {
-            this.toastAnimationInProgress = true;
+        const toastAnimationInProgress = this.toastAnimationInProgress();
+        const toastList = this.toastList();
+        if (toastAnimationInProgress === false) {
+            this.toastAnimationInProgress.set(true);
             gsap.to(this.elementRef.nativeElement, {
                 clearProps: 'all',
                 opacity: 0,
                 onComplete: () => {
-                    this.toastAnimationInProgress = false;
-                    this.toastList.shift();
-                    if (this.toastList.length !== 0) {
+                    this.toastAnimationInProgress.set(false);
+                    toastList.shift();
+                    this.toastList.set([...toastList]);
+                    if (toastList.length !== 0) {
                         this.toastTimelineShow();
                     }
                 }
@@ -88,62 +87,40 @@ class ToastComponent extends DestroyRefClass {
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
             next: (toast) => {
-                this.toastList.push(toast);
-                if (this.toastList.length === 1) {
+                const toastList = this.toastList();
+                const toastAnimationTimeout = this.toastAnimationTimeout();
+                toastList.push(toast);
+                this.toastList.set([...toastList]);
+                if (toastList.length === 1) {
                     this.toastTimelineShow();
                 }
-                else if (this.toastList.length === 2) {
-                    clearTimeout(this.toastAnimationTimeout);
+                else if (toastList.length === 2) {
+                    clearTimeout(toastAnimationTimeout);
                     this.toastTimelineHide();
                 }
                 else {
-                    this.toastList.splice(1, 1);
+                    toastList.splice(1, 1);
+                    this.toastList.set([...toastList]);
                 }
             }
         });
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastComponent, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
-    static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.7", type: ToastComponent, selector: "toast", usesInheritance: true, ngImport: i0, template: "@if (toastList.length !== 0) {\r\n  <div\r\n    class=\"toast\"\r\n    [class.toast-error]=\"toastList[0].type === 'error'\"\r\n    [class.toast-success]=\"toastList[0].type === 'success'\">\r\n    {{ toastList[0].message }}\r\n  </div>\r\n}\r\n" }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ToastComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "19.2.11", type: ToastComponent, isStandalone: true, selector: "toast", ngImport: i0, template: "@if (toastList().length !== 0) {\r\n  <div\r\n    class=\"toast\"\r\n    [class.toast-error]=\"toastList()[0].type === 'error'\"\r\n    [class.toast-success]=\"toastList()[0].type === 'success'\">\r\n    {{ toastList()[0].message }}\r\n  </div>\r\n}\r\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ToastComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'toast', template: "@if (toastList.length !== 0) {\r\n  <div\r\n    class=\"toast\"\r\n    [class.toast-error]=\"toastList[0].type === 'error'\"\r\n    [class.toast-success]=\"toastList[0].type === 'success'\">\r\n    {{ toastList[0].message }}\r\n  </div>\r\n}\r\n" }]
-        }] });
-
-class ToastModule {
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
-    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "18.2.7", ngImport: i0, type: ToastModule, declarations: [
-            // components
-            ToastComponent], imports: [CommonModule], exports: [
-            // components
-            ToastComponent] }); }
-    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastModule, imports: [CommonModule] }); }
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: ToastModule, decorators: [{
-            type: NgModule,
-            args: [{
-                    declarations: [
-                        // components
-                        ToastComponent
-                    ],
-                    imports: [
-                        CommonModule
-                    ],
-                    exports: [
-                        // components
-                        ToastComponent
-                    ]
-                }]
+            args: [{ selector: 'toast', imports: [], changeDetection: ChangeDetectionStrategy.OnPush, template: "@if (toastList().length !== 0) {\r\n  <div\r\n    class=\"toast\"\r\n    [class.toast-error]=\"toastList()[0].type === 'error'\"\r\n    [class.toast-success]=\"toastList()[0].type === 'success'\">\r\n    {{ toastList()[0].message }}\r\n  </div>\r\n}\r\n" }]
         }] });
 
 /*
  * Public API Surface of ngx-toast
  */
-// modules
+// components
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { ToastComponent, ToastModule, ToastService, ToastType };
+export { ToastComponent, ToastService, ToastType };
 //# sourceMappingURL=bruno-bombonate-ngx-toast.mjs.map

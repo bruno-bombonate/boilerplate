@@ -1,0 +1,8 @@
+@if (toastList().length !== 0) {
+  <div
+    class="toast"
+    [class.toast-error]="toastList()[0].type === 'error'"
+    [class.toast-success]="toastList()[0].type === 'success'">
+    {{ toastList()[0].message }}
+  </div>
+}

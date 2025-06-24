@@ -1,0 +1,32 @@
+<div class="row align-items-center mb-3">
+  <div class="col">
+    <h1 class="mb-0">
+      {{ activatedRoute.snapshot.title }}
+    </h1>
+  </div>
+  <div class="col-auto">
+    <button
+      type="button"
+      class="button"
+      (click)="applicationComponent.handleSignOut()">
+      Sign out
+    </button>
+  </div>
+</div>
+<div class="card mb-3">
+  @if (userService.user !== undefined) {
+    <app-profile-view
+      [item]="userService.user">
+    </app-profile-view>
+  }
+</div>
+<h2>
+  Change password
+</h2>
+<div class="card">
+  <app-password-form
+    [formLoading]="formLoading()"
+    [formReset]="formReset"
+    (formSubmit)="handleFormSubmit($event)">
+  </app-password-form>
+</div>

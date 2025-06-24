@@ -1,23 +1,23 @@
 
-@import 'imports/variables'
+@use 'imports/variables' as variables
 
 html,
 body
   height: 100%
 
 body
-  min-width: $MIN_WIDTH
-  background-color: $COLOR_WHITE
+  min-width: variables.$min-width
+  background-color: variables.$color-white
   font-family: 'Roboto'
   font-size: 16px
   line-height: 1.5
-  color: $COLOR_BLACK
+  color: variables.$color-black
   print-color-adjust: exact
 
 a
   font-weight: 300
   text-decoration: none
-  color: $COLOR_BLACK
+  color: variables.$color-black
   &:hover
     text-decoration: underline
     color: inherit
@@ -31,4 +31,3 @@ a
 th
   font-size: 14px
   font-weight: 500
-  text-transform: uppercase

@@ -1,9 +1,9 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input } from '@angular/core';
+import { DestroyRefClass } from './destroy-ref.class';
 
 @Directive()
-export abstract class ListComponentClass {
+export class ListComponentClass extends DestroyRefClass {
 
-  @Input()
-  public list: any[] = [];
+  public readonly list = input<any[]>([]);
 
 }

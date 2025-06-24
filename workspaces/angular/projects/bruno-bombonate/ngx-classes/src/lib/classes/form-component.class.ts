@@ -1,33 +1,20 @@
-import { Directive, OnChanges, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
+import { Directive, OnChanges, OnInit, input, output, SimpleChanges } from '@angular/core';
 import { DestroyRefClass } from './destroy-ref.class';
-import { FormGroup, AbstractControl, FormControl } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
+import { FormGroup, AbstractControl } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 
 @Directive()
-export abstract class FormComponentClass extends DestroyRefClass implements OnChanges, OnInit {
+export class FormComponentClass extends DestroyRefClass implements OnChanges, OnInit {
 
-  @Input()
-  public form: FormGroup = new FormGroup({ });
+  public readonly form = input<any>(new FormGroup({ }));
+  public readonly formData = input<undefined | any>(undefined);
+  public readonly formLoading = input<boolean>(false);
+  public readonly formReset = input<Subject<void>>(new Subject());
 
-  @Input()
-  public formData: undefined | any = undefined;
-
-  @Input()
-  public formLoading: boolean = false;
-
-  @Input()
-  public formReset: undefined | Subject<void> = undefined;
-
-  @Output()
-  public formChange: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  public formBack: EventEmitter<any> = new EventEmitter();
-
-  @Output()
-  public formSubmit: EventEmitter<any> = new EventEmitter();
+  public readonly formBack = output<void>();
+  public readonly formChange = output<any>();
+  public readonly formSubmit = output<any>();
 
   protected mapInputValue(value: any): any {
     return value;
@@ -38,34 +25,39 @@ export abstract class FormComponentClass extends DestroyRefClass implements OnCh
   }
 
   public ngOnChanges(simpleChanges: SimpleChanges): void {
-    if (simpleChanges && simpleChanges['formData'] && simpleChanges['formData'].firstChange) {
+
+    const form = this.form();
+
+    if (simpleChanges['formData']?.currentValue) {
       const valueMapped = this.mapInputValue(simpleChanges['formData'].currentValue);
-      this.form.patchValue(valueMapped, { emitEvent: false });
+      form.patchValue(valueMapped, { emitEvent: false });
     }
+
   }
 
   public ngOnInit(): void {
 
-    this.form.valueChanges
+    const form = this.form();
+    const formReset = this.formReset();
+
+    form.valueChanges
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         distinctUntilChanged(),
         debounceTime(500)
       )
       .subscribe(() => {
-        const valueMapped = this.mapOutputValue(this.form.value);
+        const valueMapped = this.mapOutputValue(form.value);
         this.formChange.emit(valueMapped);
       });
 
-    if (this.formReset !== undefined) {
-      this.formReset
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() => this.form.reset());
-    }
+    formReset
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => form.reset());
 
   }
-
-  public controlErrorMessageIsVisible(control: AbstractControl | FormControl): boolean {
+  
+  public controlErrorMessageIsVisible(control: AbstractControl): boolean {
     const controlErrorsIsNotNull = control.errors !== null;
     const controlTouchedIsTrue = control.touched === true;
     const controlDirtyIsTrue = control.dirty === true;
@@ -73,12 +65,23 @@ export abstract class FormComponentClass extends DestroyRefClass implements OnCh
   }
 
   public handleNgSubmit(): void {
-    this.form.markAllAsTouched();
-    if (this.form.valid === true && this.formLoading === false) {
-      this.formLoading = true;
-      const valueMapped = this.mapOutputValue(this.form.value);
+
+    const form = this.form();
+    const formLoading = this.formLoading();
+
+    form.markAllAsTouched();
+
+    if (form.valid === true && formLoading === false) {
+      const valueMapped = this.mapOutputValue(form.value);
       this.formSubmit.emit(valueMapped);
+    } else {
+      const invalidControlList = document.querySelectorAll('input.ng-invalid');
+      const invalidControlListFirst = invalidControlList[0];
+      if (invalidControlListFirst !== undefined) {
+        invalidControlListFirst.scrollIntoView({ block: 'center' });
+      }
     }
+
   }
 
 }

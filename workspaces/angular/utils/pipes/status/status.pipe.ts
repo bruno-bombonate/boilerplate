@@ -1,8 +1,7 @@
-import { Pipe, PipeTransform, isStandalone } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'status',
-  standalone: true
+  name: 'status'
 })
 export class StatusPipe implements PipeTransform {
 

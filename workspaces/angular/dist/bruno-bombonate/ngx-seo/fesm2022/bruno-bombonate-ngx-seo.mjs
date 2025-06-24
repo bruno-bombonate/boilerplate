@@ -5,13 +5,11 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
 class SeoService {
-    constructor() {
-        this.title = inject(Title);
-        this.meta = inject(Meta);
-        this.router = inject(Router);
-        this.activatedRoute = inject(ActivatedRoute);
-        this.appName = '';
-    }
+    title = inject(Title);
+    meta = inject(Meta);
+    router = inject(Router);
+    activatedRoute = inject(ActivatedRoute);
+    appName = '';
     setTitle(title) {
         this.title.setTitle(title);
     }
@@ -44,10 +42,10 @@ class SeoService {
         this.appName = appName;
         this.listenForRouteChanges();
     }
-    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: SeoService, deps: [], target: i0.ɵɵFactoryTarget.Injectable }); }
-    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: SeoService, providedIn: 'root' }); }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: SeoService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: SeoService, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "18.2.7", ngImport: i0, type: SeoService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: SeoService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root'

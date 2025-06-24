@@ -2,14 +2,11 @@
  * Public API Surface of ngx-toast
  */
 
-// modules
-export * from './lib/toast.module';
-
 // components
-export * from './lib/components/toast/toast.component';
+export * from './lib/toast.component';
 
 // services
-export * from './lib/services/toast.service';
+export * from './lib/toast.service';
 
 // interfaces
-export * from './lib/interfaces/toast.interface';
+export * from './lib/toast.interface';

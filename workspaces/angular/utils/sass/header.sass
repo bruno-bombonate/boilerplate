@@ -1,6 +1,6 @@
 
-@import 'imports/variables'
-@import 'imports/media-queries'
+@use 'imports/variables' as variables
+@use 'imports/media-queries' as media-queries
 
 .nav-button-open
   position: relative
@@ -11,20 +11,20 @@
   height: 44px
   background-color: transparent
   font-size: 0
-  padding: 0px 0px 0px 0px
-  border-width: 0px 0px 0px 0px
+  padding: 0px
+  border-width: 0px
   > span
     > span
       display: block
       width: 24px
       height: 3px
-      background-color: $COLOR_BLACK
-      margin: 6px 0px 6px 0px
+      background-color: variables.$color-black
+      margin: 6px 0px
       &:first-child
         margin-top: 0px
       &:last-child
         margin-bottom: 0px
 
-@include MQ(LG)
+@include media-queries.MQ(LG)
   .nav-button-open
     display: none

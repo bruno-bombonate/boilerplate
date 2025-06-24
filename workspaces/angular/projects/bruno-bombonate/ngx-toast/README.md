@@ -17,41 +17,23 @@ npm install @bruno-bombonate/ngx-toast
 |2.0.0|16.x|
 |3.0.0|17.x|
 |18.0.0|18.x|
+|19.0.0|19.x|
 
 ## Usage
-
-### app.module.ts
-
-```typescript
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-
-// modules
-import { ToastModule } from '@bruno-bombonate/ngx-toast';
-
-// containers
-import { AppComponent } from './app.component';
-
-@NgModule({
-  declarations: [
-    // containers
-    AppComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    AppRoutingModule,
-    // modules
-    ToastModule
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-```
 
 ### app.component.html
 
 ```html
+<button
+  type="button"
+  (click)="toastSuccess()">
+  Sucess
+</button>
+<button
+  type="button"
+  (click)="toastError()">
+  Error
+</button>
 <toast>
 </toast>
 ```
@@ -59,22 +41,28 @@ export class AppModule { }
 ### app.component.ts
 
 ```typescript
-import { Component, OnInit } from '@angular/core';
-import { ToastService } from '@bruno-bombonate/ngx-toast';
+import { Component, inject } from '@angular/core';
+import { ToastComponent, ToastService } from '@bruno-bombonate/ngx-toast';
 
 @Component({
   selector: 'app-root',
+  imports: [
+    // components
+    ToastComponent
+  ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrl: './app.component.sass'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
   private readonly toastService = inject(ToastService);
 
-  public ngOnInit(): void {
-    setTimeout(() => {
-      this.toastService.success('Lorem ipsum dolor sit amet.');
-    }, 1000);
+  public toastSuccess(): void {
+    this.toastService.success('The success message.');
+  }
+
+  public toastError(): void {
+    this.toastService.error('The error message.');
   }
 
 }
@@ -83,15 +71,15 @@ export class AppComponent implements OnInit {
 ### styles.sass
 
 ```scss
-$TOAST_MIN_WIDTH: 390px;
-$TOAST_BACKGROUND_COLOR: #000000;
-$TOAST_COLOR: #FFFFFF;
+$toast-min-width: 320px;
+$toast-background-color: #000000;
+$toast-color: #FFFFFF;
 
-$TOAST_SUCCESS_BACKGROUND_COLOR: #28A745;
-$TOAST_SUCCESS_COLOR: #FFFFFF;
+$toast-success-background-color: #28A745;
+$toast-success-color: #FFFFFF;
 
-$TOAST_ERROR_BACKGROUND_COLOR: #DC3545;
-$TOAST_ERROR_COLOR: #FFFFFF;
+$toast-error-background-color: #DC3545;
+$toast-error-color: #FFFFFF;
 
 toast {
   position: fixed;
@@ -99,7 +87,7 @@ toast {
   bottom: 0px;
   left: 0px;
   display: block;
-  min-width: $TOAST_MIN_WIDTH;
+  min-width: $toast-min-width;
   width: 100%;
   text-align: center;
   padding: 0px 32px 32px 32px;
@@ -109,22 +97,22 @@ toast {
 .toast {
   display: inline-flex;
   align-items: center;
-  background-color: $TOAST_BACKGROUND_COLOR;
+  background-color: $toast-background-color;
   line-height: 1;
   text-align: left;
-  color: $TOAST_COLOR;
-  padding: 16px 16px 16px 16px;
-  border-radius: 4px 4px 4px 4px;
+  color: $toast-color;
+  padding: 16px;
+  border-radius: 4px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10);
 }
 
 .toast-success {
-  background-color: $TOAST_SUCCESS_BACKGROUND_COLOR;
-  color: $TOAST_SUCCESS_COLOR;
+  background-color: $toast-success-background-color;
+  color: $toast-success-color;
 }
 
 .toast-error {
-  background-color: $TOAST_ERROR_BACKGROUND_COLOR;
-  color: $TOAST_ERROR_COLOR;
+  background-color: $toast-error-background-color;
+  color: $toast-error-color;
 }
 ```

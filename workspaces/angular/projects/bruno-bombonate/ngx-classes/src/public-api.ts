@@ -6,6 +6,7 @@
 export * from './lib/classes/destroy-ref.class';
 export * from './lib/classes/list-container.class';
 export * from './lib/classes/list-component.class';
+export * from './lib/classes/view-component.class';
 export * from './lib/classes/form-component.class';
 
 // interfaces

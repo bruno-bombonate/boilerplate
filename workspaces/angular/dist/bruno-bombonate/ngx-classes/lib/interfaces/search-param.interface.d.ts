@@ -11,4 +11,5 @@ export interface SearchParam {
     name: string;
     type: SearchParamType;
     valueType: SearchParamValueType;
+    valueDefault?: number | string | boolean;
 }

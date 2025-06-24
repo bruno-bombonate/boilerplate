@@ -1,4 +1,3 @@
-export * from './lib/toast.module';
-export * from './lib/components/toast/toast.component';
-export * from './lib/services/toast.service';
-export * from './lib/interfaces/toast.interface';
+export * from './lib/toast.component';
+export * from './lib/toast.service';
+export * from './lib/toast.interface';

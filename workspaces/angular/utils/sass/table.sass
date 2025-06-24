@@ -1,5 +1,5 @@
 
-@import 'imports/variables'
+@use 'imports/variables' as variables
 
 table
   width: 100%
@@ -33,7 +33,7 @@ table
   vertical-align: middle
   width: 0px
   height: 28px
-  padding: 0px 6px 0px 6px
+  padding: 0px 6px
   white-space: nowrap
   &:first-child
     padding-left: 12px
@@ -50,8 +50,8 @@ table
   cursor: pointer
   transition: background-color 0.35s, color 0.35s
   &:hover
-    background-color: $COLOR_BLACK !important
-    color: $COLOR_WHITE
+    background-color: variables.$color-black !important
+    color: variables.$color-white
 
 .table-striped .tbody .tr:nth-child(2n+1)
   background-color: #F5F5F5

@@ -5,18 +5,16 @@ import * as i0 from "@angular/core";
 export declare class ListContainerClass extends DestroyRefClass {
     protected readonly activatedRoute: ActivatedRoute;
     protected readonly router: Router;
-    listSearchParamsList: SearchParam[];
-    listSearchParams: any;
-    list: any[];
-    listLength: number;
-    listLimit: number;
-    listLoading: boolean;
+    readonly listSearchParamsList: SearchParam[];
+    readonly listSearchParams: import("@angular/core").WritableSignal<any>;
+    readonly list: import("@angular/core").WritableSignal<any[]>;
+    readonly listLength: import("@angular/core").WritableSignal<number>;
+    readonly listLoading: import("@angular/core").WritableSignal<boolean>;
     protected setListSearchParams(): void;
-    protected getHttpParamsString(): string;
     protected getList(): void;
     ngOnInit(): void;
     handleListSearchFormChange(value: any): void;
     handleListPageChange(pageEvent: any): void;
     static ɵfac: i0.ɵɵFactoryDeclaration<ListContainerClass, never>;
-    static ɵdir: i0.ɵɵDirectiveDeclaration<ListContainerClass, never, never, {}, {}, never, never, false, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<ListContainerClass, never, never, {}, {}, never, never, true, never>;
 }

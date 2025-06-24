@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <h2>
+        {{ activatedRoute.snapshot.title }}
+      </h2>
+      <app-sign-in-form
+        [formLoading]="formLoading()"
+        (formSubmit)="handleFormSubmit($event)">
+      </app-sign-in-form>
+    </div>
+    <div class="text-center mt-4">
+      <p class="mb-0">
+        Forgot password?
+        <a [routerLink]="['../', resetPasswordRoute.path]">{{ resetPasswordRoute.title }}</a>.
+      </p>
+    </div>
+  </div>
+</div>

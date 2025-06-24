@@ -1,7 +1,7 @@
 
 # @bruno-bombonate/ngx-forms
 
-A package with FormsModule containing ControlTipComponent and ControlErrorComponent.
+A package containing ControlTipComponent and ControlErrorComponent.
 
 ## Installation
 
@@ -17,45 +17,30 @@ npm install @bruno-bombonate/ngx-forms
 |4.0.0|16.x|
 |5.0.0|17.x|
 |18.0.0|18.x|
+|19.0.0|19.x|
 
 ## Usage
 
-### Import without overriding or adding custom errors.
+### Import.
 
-#### app.module.ts
+#### user-form.component.ts
 
 ```typescript
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { Component } from '@angular/core';
+import { ControlTipComponent, ControlErrorComponent } from '@bruno-bombonate/ngx-forms';
 
-// modules
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@bruno-bombonate/ngx-forms';
-
-// containers
-import { AppComponent } from './app.component';
-
-// components
-import { UserFormComponent } from './components/user-form/user-form.component';
-
-@NgModule({
-  declarations: [
-    // containers
-    AppComponent,
-    // components
-    UserFormComponent
-  ],
+@Component({
+  selector: 'app-user-form',
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    AppRoutingModule,
-    // modules
-    ReactiveFormsModule,
-    FormsModule
+    // components
+    ControlTipComponent,
+    ControlErrorComponent
   ],
-  bootstrap: [AppComponent]
+  templateUrl: './user-form.component.html',
+  styleUrl: './user-form.component.sass'
 })
-export class AppModule { }
+export class UserFormComponent { }
+
 ```
 
 #### user-form.component.html
@@ -97,9 +82,11 @@ Using ControlErrorComponent only.
       type="text"
       id="name"
       formControlName="name">
-    <control-error *ngIf="controlErrorMessageIsVisible(form.controls['name'])"
-      [controlErrors]="form.controls['name'].errors">
-    </control-error>
+    @if (controlErrorMessageIsVisible(form.controls['name'])) {
+      <control-error
+        [controlErrors]="form.controls['name'].errors">
+      </control-error>
+    }
   </div>
   <button
     type="submit">
@@ -121,14 +108,15 @@ Using both ControlTipComponent and ControlErrorComponent.
       type="text"
       id="name"
       formControlName="name">
-    <ng-container [ngSwitch]="controlErrorMessageIsVisible(form.controls['name'])">
-      <control-tip *ngSwitchCase="false">
+    @if (controlErrorMessageIsVisible(form.controls['name']) === false) {
+      <control-tip>
         Fill this field with your full name.
       </control-tip>
-      <control-error *ngSwitchCase="true"
+    } @else {
+      <control-error
         [controlErrors]="form.controls['name'].errors">
       </control-error>
-    </ng-container>
+    }
   </div>
   <button
     type="submit">
@@ -137,135 +125,34 @@ Using both ControlTipComponent and ControlErrorComponent.
 </form>
 ```
 
-### Import overriding or adding custom errors.
+### Overriding or adding custom errors.
 
-#### app.module.ts
+#### app.config.ts
 
 ```typescript
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
+import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideNgxForms, ControlErrors } from '@bruno-bombonate/ngx-forms';
 
-// modules
-import { ReactiveFormsModule } from '@angular/forms';
-import { ControlErrors, FormsModule } from '@bruno-bombonate/ngx-forms';
-
-// containers
-import { AppComponent } from './app.component';
-
-// components
-import { UserFormComponent } from './components/user-form/user-form.component';
-
-// others
-const controlErrorsCustom: ControlErrors = {
-  required: (error: any) => 'This field is required.',
-  dividedFor5: (error: any) => 'Please enter a value that is divisible by 5.',
-  between: (error: any) => `Please enter a value between ${error.valueFirst} and ${error.valueSecond}.`
+export const controlErrors: ControlErrors = {
+  required: () => 'Por favor, informe esse campo.',
+  email: () => 'Por favor, informe esse campo no formato: seunome@exemplo.com.br.',
+  pattern: () => 'Por favor, informe esse campo no formato correto.',
+  min: (error: any) => `Por favor, informe um valor de no mínimo ${error.min}.`,
+  max: (error: any) => `Por favor, informe um valor de no máximo ${error.max}.`,
+  minlength: (error: any) => `Por favor, informe no mínimo ${error.requiredLength} caracteres.`,
+  maxlength: (error: any) => `Por favor, informe no máximo ${error.requiredLength} caracteres.`,
+  custom: (error: any) => 'Minha mensagem de erro customizada...'
 };
 
-@NgModule({
-  declarations: [
-    // containers
-    AppComponent,
-    // components
-    UserFormComponent
-  ],
-  imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
-    AppRoutingModule,
-    // modules
-    ReactiveFormsModule,
-    FormsModule.forRoot(controlErrorsCustom)
-  ],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
-```
-
-#### user-form.component.ts
-
-```typescript
-import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { Component } from '@angular/core';
-import { FormComponentClass } from 'projects/bruno-bombonate/ngx-classes/src/public-api';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-class AppValidators {
-
-  static dividedFor5(control: AbstractControl): null | ValidationErrors {
-    const controlValue = control.value;
-    const controlValueInNumber = +controlValue;
-    if (controlValueInNumber % 5 !== 0) {
-      return { dividedFor5: true };
-    }
-    return null;
-  }
-
-  static between(valueFirst: number, valueSecond: number): ValidatorFn {
-    return (control: AbstractControl): null | ValidationErrors => {
-      const controlValue = control.value;
-      const controlValueInNumber = +controlValue;
-      if (controlValueInNumber < valueFirst || controlValueInNumber > valueSecond) {
-        return {
-          between: {
-            valueFirst,
-            valueSecond
-          }
-        };
-      }
-      return null;
-    };
-  }
-
-}
-
-@Component({
-  selector: 'app-user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.sass']
-})
-export class UserFormComponent extends FormComponentClass {
-
-  public override form = new FormGroup({
-    name: new FormControl<null | string>(null, [Validators.required]),
-    value: new FormControl<null | string>(null, [Validators.required, AppValidators.dividedFor5, AppValidators.between(50, 100)])
-  });
-
-}
-```
-
-#### user-form.component.html
-
-```html
-<form [formGroup]="form">
-  <div>
-    <label
-      for="name">
-      Name
-    </label>
-    <input
-      type="text"
-      formControlName="name">
-    <ng-container [ngSwitch]="controlErrorMessageIsVisible(form.controls['name'])">
-      <control-tip *ngSwitchCase="false">
-        Fill this field with your full name.
-      </control-tip>
-      <control-error *ngSwitchCase="true"
-        [controlErrors]="form.controls['name'].errors">
-      </control-error>
-    </ng-container>
-  </div>
-  <div>
-    <label
-      for="value">
-      Value
-    </label>
-    <input
-      type="text"
-      formControlName="value">
-    <control-error *ngIf="controlErrorMessageIsVisible(form.controls['value'])"
-      [controlErrors]="form.controls['value'].errors">
-    </control-error>
-  </div>
-</form>
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideExperimentalZonelessChangeDetection(),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
+    provideNgxForms(controlErrors)
+  ]
+};
 ```

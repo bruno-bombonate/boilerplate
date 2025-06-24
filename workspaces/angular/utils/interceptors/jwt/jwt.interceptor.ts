@@ -1,22 +1,17 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthenticationService } from '@bruno-bombonate/ngx-authentication';
+import { UserService } from '../../services/user/user.service';
 
 export const jwtInterceptor: HttpInterceptorFn = (httpRequest, httpHandlerFn) => {
 
-  const authenticationService = inject(AuthenticationService);
+  const userService = inject(UserService);
 
-  const authentication = authenticationService.getAuthentication();
-
-  if (authentication) {
-    const accessToken = authentication.accessToken;
-    if (accessToken) {
-      httpRequest = httpRequest.clone({
-        setHeaders: {
-          Authorization: `bearer ${accessToken}`
-        }
-      });
-    }
+  if (userService.userToken !== undefined) {
+    httpRequest = httpRequest.clone({
+      setHeaders: {
+        Authorization: `Bearer ${userService.userToken}`
+      }
+    });
   }
 
   return httpHandlerFn(httpRequest);

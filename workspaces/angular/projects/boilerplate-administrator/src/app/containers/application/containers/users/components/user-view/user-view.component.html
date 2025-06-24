@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-6">
+    <p class="view-label">
+      ID
+      <span>
+        {{ item().id }}
+      </span>
+    </p>
+  </div>
+  <div class="col-lg-6">
+    <p class="view-label">
+      Registration date
+      <span>
+        {{ item().createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+      </span>
+    </p>
+  </div>
+</div>
+<p class="view-label">
+  Name
+  <span>
+    {{ item().name }}
+  </span>
+</p>
+<p class="view-label">
+  Email
+  <span>
+    {{ item().email }}
+  </span>
+</p>
+<p class="view-label mb-0">
+  Status
+  <span>
+    <span
+      class="badge"
+      [class.badge-green]="item().status === true"
+      [class.badge-red]="item().status === false">
+      {{ item().status | status }}
+    </span>
+  </span>
+</p>
