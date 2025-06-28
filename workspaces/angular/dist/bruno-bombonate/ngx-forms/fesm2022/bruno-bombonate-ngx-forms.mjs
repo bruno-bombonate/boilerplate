@@ -1,14 +1,5 @@
 import * as i0 from '@angular/core';
-import { ChangeDetectionStrategy, Component, InjectionToken, inject, Injectable, input, computed } from '@angular/core';
-
-class ControlTipComponent {
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ControlTipComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "19.2.11", type: ControlTipComponent, isStandalone: true, selector: "control-tip", ngImport: i0, template: "<ng-content>\r\n</ng-content>\r\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
-}
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ControlTipComponent, decorators: [{
-            type: Component,
-            args: [{ selector: 'control-tip', imports: [], changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content>\r\n</ng-content>\r\n" }]
-        }] });
+import { InjectionToken, inject, Injectable, input, computed, ChangeDetectionStrategy, Component } from '@angular/core';
 
 const CONTROL_ERRORS_INJECTION_TOKEN = new InjectionToken('controlErrors', { providedIn: 'root', factory: () => undefined });
 
@@ -29,10 +20,10 @@ class FormsService {
         ...CONTROL_ERRORS,
         ...(this.controlErrorsInjectionToken ?? {})
     };
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: FormsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: FormsService, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: FormsService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: FormsService, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: FormsService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: FormsService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root',
@@ -48,19 +39,28 @@ class ControlErrorComponent {
             for (const key in controlErrors) {
                 const controlError = this.formsService.controlErrors[key];
                 if (controlError === undefined) {
-                    throw Error(`${key} error is not defined at controlErrors object. If you are using a custom validator use FormsModule.forRoot(controlErrorsCustom).`);
+                    throw Error(`${key} error is not defined at controlErrors object. If you are using a custom validator use provideNgxForms(controlErrors) at app.config.ts.`);
                 }
                 return controlError(controlErrors[key]);
             }
         }
         return undefined;
     });
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ControlErrorComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "19.2.11", type: ControlErrorComponent, isStandalone: true, selector: "control-error", inputs: { controlErrors: { classPropertyName: "controlErrors", publicName: "controlErrors", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "{{ controlErrorMessage() }}\r\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ControlErrorComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.1.0", version: "20.0.5", type: ControlErrorComponent, isStandalone: true, selector: "control-error", inputs: { controlErrors: { classPropertyName: "controlErrors", publicName: "controlErrors", isSignal: true, isRequired: false, transformFunction: null } }, ngImport: i0, template: "{{ controlErrorMessage() }}\r\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ControlErrorComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ControlErrorComponent, decorators: [{
             type: Component,
             args: [{ selector: 'control-error', imports: [], changeDetection: ChangeDetectionStrategy.OnPush, template: "{{ controlErrorMessage() }}\r\n" }]
+        }] });
+
+class ControlTipComponent {
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ControlTipComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "20.0.5", type: ControlTipComponent, isStandalone: true, selector: "control-tip", ngImport: i0, template: "<ng-content>\r\n</ng-content>\r\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ControlTipComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'control-tip', imports: [], changeDetection: ChangeDetectionStrategy.OnPush, template: "<ng-content>\r\n</ng-content>\r\n" }]
         }] });
 
 const provideNgxForms = (config) => {

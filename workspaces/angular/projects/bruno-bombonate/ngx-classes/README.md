@@ -18,6 +18,7 @@ npm install @bruno-bombonate/ngx-classes
 |3.0.0|17.x|
 |18.0.0|18.x|
 |19.0.0|19.x|
+|20.0.0|20.x|
 
 ## Usage
 

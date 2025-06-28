@@ -108,7 +108,7 @@ export class UsersController {
   ) {
 
     const userResetPasswordFound = await this.usersResetPasswordService.getUserResetPassword({ where: { userResetPasswordToken } });
-    if (userResetPasswordFound === undefined) {
+    if (userResetPasswordFound === null) {
       throw new HttpException('This password reset link does not exist.', HttpStatus.BAD_REQUEST);
     }
 

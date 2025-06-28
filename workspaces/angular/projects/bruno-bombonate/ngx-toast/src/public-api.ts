@@ -3,10 +3,10 @@
  */
 
 // components
-export * from './lib/toast.component';
+export * from './lib/components/toast/toast-component';
 
 // services
-export * from './lib/toast.service';
+export * from './lib/services/toast/toast-service';
 
 // interfaces
-export * from './lib/toast.interface';
+export * from './lib/interfaces/toast-interface';

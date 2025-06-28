@@ -3,4 +3,4 @@
  */
 
 // services
-export * from './lib/authentication.service';
+export * from './lib/services/authentication/authentication-service';

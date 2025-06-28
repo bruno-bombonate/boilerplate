@@ -1,13 +1,18 @@
 import * as i0 from '@angular/core';
-import { inject, DestroyRef, signal, Directive, input, output } from '@angular/core';
+import { inject, DestroyRef, Directive, signal, input, output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
 import { FormGroup } from '@angular/forms';
+import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
 
 class DestroyRefClass {
     destroyRef = inject(DestroyRef);
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: DestroyRefClass, deps: [], target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.5", type: DestroyRefClass, isStandalone: true, ngImport: i0 });
 }
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: DestroyRefClass, decorators: [{
+            type: Directive
+        }] });
 
 var SearchParamType;
 (function (SearchParamType) {
@@ -109,13 +114,16 @@ class ListContainerClass extends DestroyRefClass {
         this.listSearchParams.set(listSearchParams);
     }
     getList() { }
-    ngOnInit() {
-        this.setListSearchParams();
+    addActivatedRouteQueryParamsListener() {
         this.activatedRoute.queryParams
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
             this.getList();
         });
+    }
+    ngOnInit() {
+        this.setListSearchParams();
+        this.addActivatedRouteQueryParamsListener();
     }
     handleListSearchFormChange(value) {
         const listSearchParams = { ...this.listSearchParams() };
@@ -153,28 +161,28 @@ class ListContainerClass extends DestroyRefClass {
         this.listSearchParams.set(listSearchParams);
         this.router.navigate(['.'], { relativeTo: this.activatedRoute, queryParams: listSearchParamsExcludingTypeParam });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ListContainerClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "19.2.11", type: ListContainerClass, isStandalone: true, usesInheritance: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ListContainerClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "20.0.5", type: ListContainerClass, isStandalone: true, usesInheritance: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ListContainerClass, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ListContainerClass, decorators: [{
             type: Directive
         }] });
 
 class ListComponentClass extends DestroyRefClass {
     list = input([]);
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ListComponentClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "19.2.11", type: ListComponentClass, isStandalone: true, inputs: { list: { classPropertyName: "list", publicName: "list", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ListComponentClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "20.0.5", type: ListComponentClass, isStandalone: true, inputs: { list: { classPropertyName: "list", publicName: "list", isSignal: true, isRequired: false, transformFunction: null } }, usesInheritance: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ListComponentClass, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ListComponentClass, decorators: [{
             type: Directive
         }] });
 
-class ViewComponentClass {
+class ViewComponentClass extends DestroyRefClass {
     item = input.required();
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ViewComponentClass, deps: [], target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "19.2.11", type: ViewComponentClass, isStandalone: true, inputs: { item: { classPropertyName: "item", publicName: "item", isSignal: true, isRequired: true, transformFunction: null } }, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ViewComponentClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "20.0.5", type: ViewComponentClass, isStandalone: true, inputs: { item: { classPropertyName: "item", publicName: "item", isSignal: true, isRequired: true, transformFunction: null } }, usesInheritance: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: ViewComponentClass, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ViewComponentClass, decorators: [{
             type: Directive
         }] });
 
@@ -192,6 +200,22 @@ class FormComponentClass extends DestroyRefClass {
     mapOutputValue(value) {
         return value;
     }
+    addFormValueChangesListener() {
+        const form = this.form();
+        form.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef), distinctUntilChanged(), debounceTime(500))
+            .subscribe(() => {
+            const valueMapped = this.mapOutputValue(form.value);
+            this.formChange.emit(valueMapped);
+        });
+    }
+    addFormResetListener() {
+        const form = this.form();
+        const formReset = this.formReset();
+        formReset
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(() => form.reset());
+    }
     ngOnChanges(simpleChanges) {
         const form = this.form();
         if (simpleChanges['formData']?.currentValue) {
@@ -200,17 +224,8 @@ class FormComponentClass extends DestroyRefClass {
         }
     }
     ngOnInit() {
-        const form = this.form();
-        const formReset = this.formReset();
-        form.valueChanges
-            .pipe(takeUntilDestroyed(this.destroyRef), distinctUntilChanged(), debounceTime(500))
-            .subscribe(() => {
-            const valueMapped = this.mapOutputValue(form.value);
-            this.formChange.emit(valueMapped);
-        });
-        formReset
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => form.reset());
+        this.addFormValueChangesListener();
+        this.addFormResetListener();
     }
     controlErrorMessageIsVisible(control) {
         const controlErrorsIsNotNull = control.errors !== null;
@@ -234,10 +249,10 @@ class FormComponentClass extends DestroyRefClass {
             }
         }
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: FormComponentClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
-    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "19.2.11", type: FormComponentClass, isStandalone: true, inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null }, formData: { classPropertyName: "formData", publicName: "formData", isSignal: true, isRequired: false, transformFunction: null }, formLoading: { classPropertyName: "formLoading", publicName: "formLoading", isSignal: true, isRequired: false, transformFunction: null }, formReset: { classPropertyName: "formReset", publicName: "formReset", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { formBack: "formBack", formChange: "formChange", formSubmit: "formSubmit" }, usesInheritance: true, usesOnChanges: true, ngImport: i0 });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: FormComponentClass, deps: null, target: i0.ɵɵFactoryTarget.Directive });
+    static ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "17.1.0", version: "20.0.5", type: FormComponentClass, isStandalone: true, inputs: { form: { classPropertyName: "form", publicName: "form", isSignal: true, isRequired: false, transformFunction: null }, formData: { classPropertyName: "formData", publicName: "formData", isSignal: true, isRequired: false, transformFunction: null }, formLoading: { classPropertyName: "formLoading", publicName: "formLoading", isSignal: true, isRequired: false, transformFunction: null }, formReset: { classPropertyName: "formReset", publicName: "formReset", isSignal: true, isRequired: false, transformFunction: null } }, outputs: { formBack: "formBack", formChange: "formChange", formSubmit: "formSubmit" }, usesInheritance: true, usesOnChanges: true, ngImport: i0 });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "19.2.11", ngImport: i0, type: FormComponentClass, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: FormComponentClass, decorators: [{
             type: Directive
         }] });
 

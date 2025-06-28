@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { authenticationRoute } from './containers/authentication/authentication.route';
-import { applicationRoute } from './containers/application/application.route';
+import { authenticationContainerRoutes } from './containers/authentication/authentication-container.routes';
+import { applicationContainerRoutes } from './containers/application/application-container.routes';
 
 export const routes: Routes = [
-  authenticationRoute,
-  applicationRoute,
+  authenticationContainerRoutes,
+  applicationContainerRoutes,
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: authenticationRoute.path
+    redirectTo: authenticationContainerRoutes.path
   }
 ];

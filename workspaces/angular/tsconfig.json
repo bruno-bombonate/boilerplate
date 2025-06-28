@@ -3,12 +3,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
     "paths": {
       "@bruno-bombonate/ngx-authentication": [
         "./dist/bruno-bombonate/ngx-authentication"
@@ -26,19 +20,68 @@
         "./dist/bruno-bombonate/ngx-toast"
       ]
     },
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "isolatedModules": true,
-    "esModuleInterop": true,
     "experimentalDecorators": true,
-    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "ES2022"
+    "module": "preserve"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
+    "typeCheckHostBindings": true,
     "strictTemplates": true
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/boilerplate-user/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/boilerplate-user/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/boilerplate-administrator/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/boilerplate-administrator/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-classes/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-classes/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-toast/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-toast/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-authentication/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-authentication/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-seo/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-seo/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-forms/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bruno-bombonate/ngx-forms/tsconfig.spec.json"
+    }
+  ]
 }

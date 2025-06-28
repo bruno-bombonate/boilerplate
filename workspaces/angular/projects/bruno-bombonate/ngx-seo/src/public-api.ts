@@ -3,4 +3,4 @@
  */
 
 // services
-export * from './lib/seo.service';
+export * from './lib/services/seo/seo-service';

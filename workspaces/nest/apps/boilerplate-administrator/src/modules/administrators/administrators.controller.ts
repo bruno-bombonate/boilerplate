@@ -92,7 +92,7 @@ export class AdministratorsController {
   ) {
 
     const administratorResetPasswordFound = await this.administratorsResetPasswordService.getAdministratorResetPassword({ where: { administratorResetPasswordToken: administratorResetPasswordToken } });
-    if (administratorResetPasswordFound === undefined) {
+    if (administratorResetPasswordFound === null) {
       throw new HttpException('This password reset link does not exist.', HttpStatus.BAD_REQUEST);
     }
 

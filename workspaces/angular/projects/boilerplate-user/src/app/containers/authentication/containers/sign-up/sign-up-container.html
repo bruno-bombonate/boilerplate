@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-lg-6 offset-lg-3">
+    <div class="card">
+      <h2>
+        {{ activatedRoute.snapshot.title }}
+      </h2>
+      <app-sign-up-form
+        [formLoading]="formLoading()"
+        (formSubmit)="handleFormSubmit($event)">
+      </app-sign-up-form>
+    </div>
+    <div class="text-center mt-4">
+      <p class="mb-0">
+        Already have an account?
+        <a [routerLink]="['../', signInContainerRoutes.path]">{{ signInContainerRoutes.title }}</a>.
+      </p>
+    </div>
+  </div>
+</div>

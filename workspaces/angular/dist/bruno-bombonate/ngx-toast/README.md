@@ -18,6 +18,7 @@ npm install @bruno-bombonate/ngx-toast
 |3.0.0|17.x|
 |18.0.0|18.x|
 |19.0.0|19.x|
+|20.0.0|20.x|
 
 ## Usage
 
@@ -68,7 +69,7 @@ export class AppComponent {
 }
 ```
 
-### styles.sass
+### styles.scss
 
 ```scss
 $toast-min-width: 320px;
