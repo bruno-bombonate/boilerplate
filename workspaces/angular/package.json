@@ -15,14 +15,14 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/platform-server": "^20.0.0",
-    "@angular/router": "^20.0.0",
-    "@angular/ssr": "^20.0.4",
+    "@angular/common": "^20.3.31",
+    "@angular/compiler": "^20.3.31",
+    "@angular/core": "^20.3.31",
+    "@angular/forms": "^20.3.31",
+    "@angular/platform-browser": "^20.3.31",
+    "@angular/platform-server": "^20.3.31",
+    "@angular/router": "^20.3.31",
+    "@angular/ssr": "^20.3.37",
     "bootstrap": "^5.3.7",
     "express": "^5.1.0",
     "gsap": "^3.13.0",
@@ -31,9 +31,9 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.0.4",
-    "@angular/cli": "^20.0.3",
-    "@angular/compiler-cli": "^20.0.0",
+    "@angular/build": "^20.3.37",
+    "@angular/cli": "^20.3.37",
+    "@angular/compiler-cli": "^20.3.31",
     "@types/express": "^5.0.1",
     "@types/jasmine": "~5.1.0",
     "@types/lodash": "^4.17.19",
@@ -47,5 +47,14 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^20.0.0",
     "typescript": "~5.8.2"
+  },
+  "overrides": {
+    "esbuild": "^0.28.2"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.1": true,
+    "esbuild@0.28.2": true,
+    "lmdb@3.4.2": true,
+    "msgpackr-extract@3.0.4": true
   }
 }
