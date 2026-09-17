@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { SeoService } from './seo-service';
 
@@ -6,7 +7,9 @@ describe('SeoService', () => {
   let service: SeoService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [provideRouter([])]
+    });
     service = TestBed.inject(SeoService);
   });
 

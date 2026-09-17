@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, inject, signal } from '@angular/core';
 import { AdministratorFormComponent } from '../../components/administrator-form/administrator-form-component';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { HttpService } from '../../../../../../utils/services/http/http-service';
+import { HttpService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,11 +10,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-administrators-details-container',
   imports: [
     // components
-    AdministratorFormComponent
+    AdministratorFormComponent,
   ],
   templateUrl: './administrators-details-container.html',
   styleUrl: './administrators-details-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdministratorsDetailsContainer extends DestroyRefClass implements OnInit {
 
@@ -38,9 +38,9 @@ export class AdministratorsDetailsContainer extends DestroyRefClass implements O
           this.administrator.set(response.data);
         },
         error: (response: any) => {
-          this.toastService.error(response.message);
+          this.toastService.error(response.error.message);
           this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-        }
+        },
       });
 
   }
@@ -56,10 +56,10 @@ export class AdministratorsDetailsContainer extends DestroyRefClass implements O
             this.router.navigate(['../'], { relativeTo: this.activatedRoute });
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.formLoading.set(false);
-          }
-        })
+          },
+        });
     }
   }
 

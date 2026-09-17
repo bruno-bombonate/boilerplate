@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { UsersContainer } from './users-container';
 
@@ -8,13 +9,13 @@ describe('UsersContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UsersContainer]
-    })
-    .compileComponents();
+      imports: [UsersContainer],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UsersContainer);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

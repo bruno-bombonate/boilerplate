@@ -1,12 +1,10 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { SignInFormComponent } from '../../../../../../../../utils/components/sign-in-form/sign-in-form-component';
+import { SignInFormComponent, HttpService, UserService } from '@app/boilerplate-utils';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
-import { HttpService } from '../../../../utils/services/http/http-service';
-import { UserService } from '../../../../../../../../utils/services/user/user-service';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
-import { signUpContainerRoutes } from '../sign-up/sign-up-container.routes';
-import { resetPasswordContainerRoutes } from '../reset-password/reset-password-container.routes';
+import { signUpContainerRoutes } from '../sign-up/sign-up-routes';
+import { resetPasswordContainerRoutes } from '../reset-password/reset-password-routes';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -15,11 +13,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     // components
     SignInFormComponent,
     // directives
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './sign-in-container.html',
   styleUrl: './sign-in-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInContainer extends DestroyRefClass {
 
@@ -46,9 +44,9 @@ export class SignInContainer extends DestroyRefClass {
             this.router.navigate(['/']);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.formLoading.set(false);
-          }
+          },
         });
     }
   }

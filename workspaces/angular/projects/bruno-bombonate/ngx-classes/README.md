@@ -19,6 +19,9 @@ npm install @bruno-bombonate/ngx-classes
 |18.0.0|18.x|
 |19.0.0|19.x|
 |20.0.0|20.x|
+|21.0.0|21.x|
+
+Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
 
 ## Usage
 
@@ -83,6 +86,39 @@ export class UsersListComponent extends ListContainerClass {
 
 }
 ```
+
+`ListContainerClass` gives you, ready to use in your template:
+
+- `list: Signal<any[]>`, `listLength: Signal<number>`, `listLoading: Signal<boolean>` — set them yourself inside `getList()`, as shown above.
+- `listSearchParams: Signal<any>` — the current search params, already read from the route and coerced to the right type (see `SearchParam` below). Pass it as `[formData]` to your search-form component.
+- `handleListSearchFormChange(value: any): void` — bind it to your search-form's `(formChange)`. It merges `value` into the current search params, resets `page` back to `1`, and navigates (updating the URL's query params) — which in turn re-triggers `getList()` through the `queryParams` subscription set up by the base class.
+- `handleListPageChange(pageEvent: any): void` — bind it to a paginator's page-change event (any object with a `pageIndex` property). Same idea as above, but only touches `page`.
+
+#### The `SearchParam` array
+
+Each entry in `listSearchParamsList` describes one filter/param your list understands:
+
+```typescript
+export enum SearchParamType {
+  Param = 'paramMap',       // a route path segment, e.g. the :id in /users/:id
+  QueryParam = 'queryParamMap' // a query string param, e.g. ?page=1
+}
+
+export enum SearchParamValueType {
+  Number = 'number',
+  String = 'string',
+  Boolean = 'boolean'
+}
+
+export interface SearchParam {
+  name: string;
+  type: SearchParamType;
+  valueType: SearchParamValueType;
+  valueDefault?: number | string | boolean;
+}
+```
+
+`type` decides whether the raw value is read from `activatedRoute.snapshot.paramMap` or `.queryParamMap`; `valueType` decides how the raw (always-a-string) value gets coerced — this coercion is done with the exported `transform`/`transformNumber`/`transformString`/`transformBoolean` functions, which you can also import and use on their own if you need the same string-to-typed-value coercion somewhere else in your app.
 
 ### ListComponentClass
 
@@ -167,6 +203,13 @@ export class UserFormComponent extends FormComponentClass implements OnChanges {
 
 }
 ```
+
+`FormComponentClass` already wires up, so you only need to override `form` (and optionally `mapInputValue`/`mapOutputValue`):
+
+- **Inputs**: `form` (your `FormGroup`, override it as shown above), `formData` (pass the record being edited; on its first change it's mapped through `mapInputValue` and patched into `form` without emitting `formChange`), `formLoading` (disable double-submits while `true` — it's checked by `handleNgSubmit`), `formReset` (a `Subject<void>`; call `.next()` on the instance you pass in to reset the form, e.g. after a successful non-navigating submit).
+- **Outputs**: `formSubmit` (emits the value mapped through `mapOutputValue`, only when the form is valid and `formLoading` is `false`), `formChange` (emits on every value change, debounced 500ms, also mapped through `mapOutputValue` — bind it to `handleListSearchFormChange` of a [`ListContainerClass`](#listcontainerclass) for a live search form), `formBack` (not emitted by the base class itself — it's there for you to `emit()` from your own component when you add a cancel/back action, so callers have one consistent output to listen to).
+- **`mapInputValue(value)` / `mapOutputValue(value)`** — override these `protected` methods when the shape of `formData` (coming from the API) doesn't match the shape `form` expects, or vice-versa (e.g. splitting/joining a nested `password` group, like the sign-up form in this project's own boilerplate does).
+- **Submit with an invalid form**: `handleNgSubmit` (bind it to `(ngSubmit)` on your `<form>`) calls `form.markAllAsTouched()` and, if still invalid, scrolls the first control matching `.ng-invalid` **inside this component's own host element** into view — it won't reach into other components on the page, and it skips the `<form>` element itself (which also gets `.ng-invalid` from Angular when its group is invalid).
 
 ### DestroyRefClass
 

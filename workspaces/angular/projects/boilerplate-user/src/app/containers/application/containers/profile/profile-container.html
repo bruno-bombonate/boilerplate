@@ -1,6 +1,6 @@
-<div class="row align-items-center mb-3">
+<div class="row align-items-center">
   <div class="col">
-    <h1 class="mb-0">
+    <h1>
       {{ activatedRoute.snapshot.title }}
     </h1>
   </div>
@@ -13,17 +13,17 @@
     </button>
   </div>
 </div>
-<div class="card mb-3">
+<div class="card mt-4">
   @if (userService.user !== undefined) {
     <app-profile-view
       [item]="userService.user">
     </app-profile-view>
   }
 </div>
-<h2>
+<h2 class="mt-4">
   Change password
 </h2>
-<div class="card">
+<div class="card mt-4">
   <app-password-form
     [formLoading]="formLoading()"
     [formReset]="formReset"

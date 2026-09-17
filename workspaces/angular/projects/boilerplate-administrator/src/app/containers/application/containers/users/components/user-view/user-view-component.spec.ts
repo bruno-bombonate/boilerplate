@@ -8,13 +8,13 @@ describe('UserViewComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserViewComponent]
-    })
-    .compileComponents();
+      imports: [UserViewComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserViewComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.componentRef.setInput('item', { id: 1, name: 'Name', email: 'name@example.com', status: true, createdAt: new Date() });
+    await fixture.whenStable();
   });
 
   it('should create', () => {

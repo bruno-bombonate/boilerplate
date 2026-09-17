@@ -8,13 +8,12 @@ describe('UserSearchFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserSearchFormComponent]
-    })
-    .compileComponents();
+      imports: [UserSearchFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UserSearchFormComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

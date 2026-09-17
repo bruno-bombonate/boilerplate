@@ -5,14 +5,14 @@
   [formData]="listSearchParams()"
   (formChange)="handleListSearchFormChange($event)">
 </app-user-search-form>
-<div class="card">
+<div class="card mt-4">
   @if (listLoading() === true) {
-    <p class="fw-light text-center mb-0">
+    <p class="fw-light text-center">
       Loading...
     </p>
   } @else {
     @if (list().length === 0) {
-      <p class="fw-light text-center mb-0">
+      <p class="fw-light text-center">
         No user found.
       </p>
     } @else {

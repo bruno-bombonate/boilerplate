@@ -4,21 +4,12 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {
-      "@bruno-bombonate/ngx-authentication": [
-        "./dist/bruno-bombonate/ngx-authentication"
-      ],
-      "@bruno-bombonate/ngx-classes": [
-        "./dist/bruno-bombonate/ngx-classes"
-      ],
-      "@bruno-bombonate/ngx-forms": [
-        "./dist/bruno-bombonate/ngx-forms"
-      ],
-      "@bruno-bombonate/ngx-seo": [
-        "./dist/bruno-bombonate/ngx-seo"
-      ],
-      "@bruno-bombonate/ngx-toast": [
-        "./dist/bruno-bombonate/ngx-toast"
-      ]
+      "@bruno-bombonate/ngx-authentication": ["./dist/bruno-bombonate/ngx-authentication"],
+      "@bruno-bombonate/ngx-classes": ["./dist/bruno-bombonate/ngx-classes"],
+      "@bruno-bombonate/ngx-forms": ["./dist/bruno-bombonate/ngx-forms"],
+      "@bruno-bombonate/ngx-seo": ["./dist/bruno-bombonate/ngx-seo"],
+      "@bruno-bombonate/ngx-toast": ["./dist/bruno-bombonate/ngx-toast"],
+      "@app/boilerplate-utils": ["./dist/boilerplate-utils"]
     },
     "strict": true,
     "noImplicitOverride": true,
@@ -36,7 +27,6 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "typeCheckHostBindings": true,
     "strictTemplates": true
   },
   "files": [],
@@ -82,6 +72,12 @@
     },
     {
       "path": "./projects/bruno-bombonate/ngx-forms/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/boilerplate-utils/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/boilerplate-utils/tsconfig.spec.json"
     }
   ]
 }

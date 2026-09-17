@@ -1,7 +1,7 @@
 
 # @bruno-bombonate/ngx-forms
 
-A package containing ControlTipComponent and ControlErrorComponent.
+A package containing `ControlTipComponent` and `ControlErrorComponent`, with `FormsService`/`provideNgxForms` to customize error messages and error-visibility rules app-wide.
 
 ## Installation
 
@@ -19,6 +19,9 @@ npm install @bruno-bombonate/ngx-forms
 |18.0.0|18.x|
 |19.0.0|19.x|
 |20.0.0|20.x|
+|21.0.0|21.x|
+
+Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
 
 ## Usage
 
@@ -70,7 +73,7 @@ Using ControlTipComponent only.
 </form>
 ```
 
-Using ControlErrorComponent only.
+Using ControlErrorComponent only. `ControlErrorComponent` receives the whole `AbstractControl` (not just its `errors`) and decides on its own whether the message should be visible — by default, when the control has errors and is `touched` or `dirty`.
 
 ```html
 <form [formGroup]="form" (ngSubmit)="handleNgSubmit()">
@@ -83,11 +86,9 @@ Using ControlErrorComponent only.
       type="text"
       id="name"
       formControlName="name">
-    @if (controlErrorMessageIsVisible(form.controls['name'])) {
-      <control-error
-        [controlErrors]="form.controls['name'].errors">
-      </control-error>
-    }
+    <control-error
+      [control]="form.controls['name']">
+    </control-error>
   </div>
   <button
     type="submit">
@@ -96,7 +97,20 @@ Using ControlErrorComponent only.
 </form>
 ```
 
-Using both ControlTipComponent and ControlErrorComponent.
+Using both ControlTipComponent and ControlErrorComponent. If you need the same visibility rule elsewhere in your template (for example, to hide a `ControlTipComponent` while an error is shown), inject `FormsService` and call `controlErrorVisible(control)` — it's the same predicate `ControlErrorComponent` uses internally (the default one, or the one you provided via `provideNgxForms`, see below).
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { FormsService } from '@bruno-bombonate/ngx-forms';
+
+@Component({
+  selector: 'app-user-form',
+  // ...
+})
+export class UserFormComponent {
+  protected readonly formsService = inject(FormsService);
+}
+```
 
 ```html
 <form [formGroup]="form" (ngSubmit)="handleNgSubmit()">
@@ -109,13 +123,13 @@ Using both ControlTipComponent and ControlErrorComponent.
       type="text"
       id="name"
       formControlName="name">
-    @if (controlErrorMessageIsVisible(form.controls['name']) === false) {
+    @if (formsService.controlErrorVisible(form.controls['name']) === false) {
       <control-tip>
         Fill this field with your full name.
       </control-tip>
     } @else {
       <control-error
-        [controlErrors]="form.controls['name'].errors">
+        [control]="form.controls['name']">
       </control-error>
     }
   </div>
@@ -126,34 +140,40 @@ Using both ControlTipComponent and ControlErrorComponent.
 </form>
 ```
 
-### Overriding or adding custom errors.
+### Overriding or adding custom errors, or the error visibility rule.
+
+Out of the box, `ControlErrorComponent` already has a message for every one of Angular's built-in validators: `required`, `requiredTrue`, `email`, `pattern`, `min`, `max`, `minlength`, `maxlength`. You only need `provideNgxForms` if you want to change one of those messages, translate them, or add a message for your own custom validator's error key (like `custom` below) — `controlErrors` is **merged** into the built-in defaults, not a replacement for them, so you only need to list the keys you're adding or overriding, not the full set.
+
+`provideNgxForms` takes an options object — both `controlErrors` and `controlErrorVisible` are optional, so you can pass either one, both, or neither.
 
 #### app.config.ts
 
 ```typescript
-import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideNgxForms, ControlErrors } from '@bruno-bombonate/ngx-forms';
+import { provideNgxForms, ControlErrors, ControlErrorVisible } from '@bruno-bombonate/ngx-forms';
 
 export const controlErrors: ControlErrors = {
+  // overriding a built-in message
   required: () => 'Por favor, informe esse campo.',
-  email: () => 'Por favor, informe esse campo no formato: seunome@exemplo.com.br.',
-  pattern: () => 'Por favor, informe esse campo no formato correto.',
-  min: (error: any) => `Por favor, informe um valor de no mínimo ${error.min}.`,
-  max: (error: any) => `Por favor, informe um valor de no máximo ${error.max}.`,
-  minlength: (error: any) => `Por favor, informe no mínimo ${error.requiredLength} caracteres.`,
-  maxlength: (error: any) => `Por favor, informe no máximo ${error.requiredLength} caracteres.`,
+  // adding a message for your own custom validator's error key
   custom: (error: any) => 'Minha mensagem de erro customizada...'
 };
 
+// Default rule is: control.errors !== null && (control.touched || control.dirty).
+// Override it here to change when every <control-error> in this app shows its message.
+export const controlErrorVisible: ControlErrorVisible = (control) => control.errors !== null;
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
+    provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideNgxForms(controlErrors)
+    provideNgxForms({ controlErrors, controlErrorVisible })
   ]
 };
 ```
+
+If a control has an error whose key isn't in the built-in list and wasn't added through `controlErrors`, `ControlErrorComponent` throws — that's on purpose, so a forgotten custom-validator message fails loudly in development instead of silently showing nothing.

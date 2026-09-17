@@ -3,7 +3,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { ControlErrorComponent } from '@bruno-bombonate/ngx-forms';
 import { DatePipe } from '@angular/common';
 import { FormComponentClass } from '@bruno-bombonate/ngx-classes';
-import { passwordConfirmation } from '../../../../../../../../../../utils/validators/password-confirmation/password-confirmation-validator';
+import { passwordConfirmation } from '@app/boilerplate-utils';
 import { cloneDeep } from 'lodash';
 
 @Component({
@@ -14,14 +14,14 @@ import { cloneDeep } from 'lodash';
     // components
     ControlErrorComponent,
     // pipes
-    DatePipe
+    DatePipe,
   ],
   templateUrl: './administrator-form-component.html',
   styleUrl: './administrator-form-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdministratorFormComponent extends FormComponentClass implements OnChanges {
-  
+
   public override readonly form = input(
     new FormGroup({
       name: new FormControl<null | string>(null, [Validators.required]),
@@ -30,8 +30,8 @@ export class AdministratorFormComponent extends FormComponentClass implements On
         password: new FormControl<null | string>(null, [Validators.required]),
         passwordConfirmation: new FormControl<null | boolean>(null, [Validators.required]),
       }, { validators: passwordConfirmation('password', 'passwordConfirmation') }),
-      status: new FormControl<null | boolean>(null, [Validators.required])
-    })
+      status: new FormControl<null | boolean>(null, [Validators.required]),
+    }),
   );
 
   public get passwordFormGroup() {

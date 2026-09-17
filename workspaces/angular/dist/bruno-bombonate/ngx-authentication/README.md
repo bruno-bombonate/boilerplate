@@ -19,8 +19,18 @@ npm install @bruno-bombonate/ngx-authentication
 |18.0.0|18.x|
 |19.0.0|19.x|
 |20.0.0|20.x|
+|21.0.0|21.x|
+
+Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
 
 ## Usage
+
+`AuthenticationService` has four methods:
+
+- `setAuthentication(authentication: any, rememberMe: boolean): void` — stores `authentication` as JSON, in `localStorage` when `rememberMe` is `true`, in `sessionStorage` otherwise (so it's cleared when the browser tab closes).
+- `getAuthentication(): null | any` — reads back whatever was stored (checking `localStorage` first, then `sessionStorage`), parsed from JSON. Returns `null` if nothing is stored, or when called on the server (SSR-safe: every method is a no-op outside the browser).
+- `isLoggedIn(): boolean` — `true` if there's anything stored in either `localStorage` or `sessionStorage`, without parsing it. Cheaper than `getAuthentication() !== null` when you only need a yes/no answer (e.g. inside a route guard).
+- `unsetAuthentication(): void` — removes the stored value from both `localStorage` and `sessionStorage`.
 
 ### sign-in.component.ts
 
@@ -81,4 +91,33 @@ export class MyAccountComponent {
   }
 
 }
+```
+
+### application.guard.ts
+
+```typescript
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthenticationService } from '@bruno-bombonate/ngx-authentication';
+
+export const applicationGuard: CanActivateFn = () => {
+
+  const authenticationService = inject(AuthenticationService);
+  const router = inject(Router);
+
+  if (authenticationService.isLoggedIn() === true) {
+    return true;
+  }
+
+  router.navigate(['/sign-in']);
+  return false;
+
+};
+```
+
+`getAuthentication()` returns whatever object you originally passed to `setAuthentication` (for example `{ token: '...', user: { ... } }`), so you can read it wherever you need the stored token or user without making a network call:
+
+```typescript
+const authentication = authenticationService.getAuthentication();
+const token = authentication?.token;
 ```

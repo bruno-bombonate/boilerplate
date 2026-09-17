@@ -25,4 +25,12 @@ export class ToastService {
     this.send = { type: ToastType.Error, message };
   }
 
+  public warning(message: string): void {
+    this.send = { type: ToastType.Warning, message };
+  }
+
+  public info(message: string): void {
+    this.send = { type: ToastType.Info, message };
+  }
+
 }

@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { AdministratorSearchFormComponent } from '../../components/administrator-search-form/administrator-search-form-component';
 import { AdministratorListComponent } from '../../components/administrator-list/administrator-list-component';
 import { RouterLink } from '@angular/router';
-import { HttpService } from '../../../../../../utils/services/http/http-service';
+import { HttpService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { ListContainerClass, SearchParamType, SearchParamValueType } from '@bruno-bombonate/ngx-classes';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -14,11 +14,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     AdministratorSearchFormComponent,
     AdministratorListComponent,
     // directives
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './administrators-list-container.html',
   styleUrl: './administrators-list-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdministratorsListContainer extends ListContainerClass {
 
@@ -33,7 +33,7 @@ export class AdministratorsListContainer extends ListContainerClass {
     { name: 'administratorId', type: SearchParamType.QueryParam, valueType: SearchParamValueType.Number },
     { name: 'administratorName', type: SearchParamType.QueryParam, valueType: SearchParamValueType.String },
     { name: 'administratorEmail', type: SearchParamType.QueryParam, valueType: SearchParamValueType.String },
-    { name: 'administratorStatus', type: SearchParamType.QueryParam, valueType: SearchParamValueType.Boolean }
+    { name: 'administratorStatus', type: SearchParamType.QueryParam, valueType: SearchParamValueType.Boolean },
   ];
 
   protected override getList(): void {
@@ -48,9 +48,9 @@ export class AdministratorsListContainer extends ListContainerClass {
             this.listLoading.set(false);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.listLoading.set(false);
-          }
+          },
         });
     }
   }

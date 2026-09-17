@@ -1,12 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { ProfileViewComponent } from '../../../../../../../../utils/components/profile-view/profile-view-component';
-import { PasswordFormComponent } from '../../../../../../../../utils/components/password-form/password-form-component';
+import { ProfileViewComponent, PasswordFormComponent, HttpService, UserService } from '@app/boilerplate-utils';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { HttpService } from '../../../../utils/services/http/http-service';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { ActivatedRoute } from '@angular/router';
 import { ApplicationContainer } from '../../application-container';
-import { UserService } from '../../../../../../../../utils/services/user/user-service';
 import { Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -15,11 +12,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [
     // components
     ProfileViewComponent,
-    PasswordFormComponent
+    PasswordFormComponent,
   ],
   templateUrl: './profile-container.html',
   styleUrl: './profile-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileContainer extends DestroyRefClass {
 
@@ -35,7 +32,7 @@ export class ProfileContainer extends DestroyRefClass {
   public handleFormSubmit(value: any): void {
     if (this.formLoading() === false) {
       this.formLoading.set(true);
-      this.httpService.patch({ url: 'users/change-password', body: value })
+      this.httpService.patch({ url: 'administrators/change-password', body: value })
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (response: any) => {
@@ -44,9 +41,9 @@ export class ProfileContainer extends DestroyRefClass {
             this.formLoading.set(false);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.formLoading.set(false);
-          }
+          },
         });
     }
   }

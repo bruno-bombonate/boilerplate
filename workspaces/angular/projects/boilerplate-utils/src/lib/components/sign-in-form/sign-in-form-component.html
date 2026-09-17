@@ -1,0 +1,42 @@
+<form [formGroup]="form()" (ngSubmit)="handleNgSubmit()">
+  <div class="mt-4">
+    <label
+      for="email"
+      class="form-label">
+      Email
+    </label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      autocomplete="username"
+      [formControl]="form().controls['email']">
+    <control-error
+      [control]="form().controls['email']">
+    </control-error>
+  </div>
+  <div class="mt-4">
+    <label
+      for="password"
+      class="form-label">
+      Password
+    </label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      autocomplete="current-password"
+      [formControl]="form().controls['password']">
+    <control-error
+      [control]="form().controls['password']">
+    </control-error>
+  </div>
+  <div class="text-center mt-4">
+    <button
+      type="submit"
+      class="button"
+      [disabled]="formLoading() === true">
+      Sign in
+    </button>
+  </div>
+</form>

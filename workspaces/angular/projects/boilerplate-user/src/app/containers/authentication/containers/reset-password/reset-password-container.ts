@@ -1,11 +1,9 @@
 import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { ResetPasswordRequestFormComponent } from '../../../../../../../../utils/components/reset-password-request-form/reset-password-request-form-component';
-import { ResetPasswordFormComponent } from '../../../../../../../../utils/components/reset-password-form/reset-password-form-component';
+import { ResetPasswordRequestFormComponent, ResetPasswordFormComponent, HttpService } from '@app/boilerplate-utils';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { HttpService } from '../../../../utils/services/http/http-service';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
-import { signInContainerRoutes } from '../sign-in/sign-in-container.routes';
+import { signInContainerRoutes } from '../sign-in/sign-in-routes';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -15,11 +13,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ResetPasswordRequestFormComponent,
     ResetPasswordFormComponent,
     // directives
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './reset-password-container.html',
   styleUrl: './reset-password-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordContainer extends DestroyRefClass {
 
@@ -31,7 +29,7 @@ export class ResetPasswordContainer extends DestroyRefClass {
   public readonly token = signal<null | string>(this.activatedRoute.snapshot.queryParamMap.get('token'));
 
   public readonly formLoading = signal<boolean>(false);
-  
+
   public readonly signInContainerRoutes = signInContainerRoutes;
 
   public handleResetPasswordRequestFormSubmit(value: any): void {
@@ -45,9 +43,9 @@ export class ResetPasswordContainer extends DestroyRefClass {
             this.router.navigate(['/sign-in']);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.formLoading.set(false);
-          }
+          },
         });
     }
   }
@@ -63,9 +61,9 @@ export class ResetPasswordContainer extends DestroyRefClass {
             this.router.navigate(['/sign-in']);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.formLoading.set(false);
-          }
+          },
         });
     }
   }

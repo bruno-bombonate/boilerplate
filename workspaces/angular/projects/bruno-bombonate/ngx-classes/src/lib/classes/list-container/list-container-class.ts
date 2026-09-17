@@ -87,7 +87,7 @@ export class ListContainerClass extends DestroyRefClass implements OnInit {
 
   public handleListPageChange(pageEvent: any): void {
 
-    const listSearchParams = this.listSearchParams();
+    const listSearchParams = { ... this.listSearchParams() };
 
     listSearchParams.page = pageEvent.pageIndex + 1;
 

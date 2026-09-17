@@ -7,10 +7,10 @@ import { ToastComponent } from '@bruno-bombonate/ngx-toast';
   imports: [
     // components
     RouterOutlet,
-    ToastComponent
+    ToastComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App { }
+export class App {}

@@ -6,11 +6,11 @@ import { FormComponentClass } from '@bruno-bombonate/ngx-classes';
   selector: 'app-user-search-form',
   imports: [
     // modules
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './user-search-form-component.html',
   styleUrl: './user-search-form-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSearchFormComponent extends FormComponentClass {
 
@@ -19,8 +19,8 @@ export class UserSearchFormComponent extends FormComponentClass {
       userId: new FormControl<null | number>(null),
       userName: new FormControl<null | string>(null),
       userEmail: new FormControl<null | string>(null),
-      userStatus: new FormControl<null | boolean>(null)
-    })
+      userStatus: new FormControl<null | boolean>(null),
+    }),
   );
 
 }

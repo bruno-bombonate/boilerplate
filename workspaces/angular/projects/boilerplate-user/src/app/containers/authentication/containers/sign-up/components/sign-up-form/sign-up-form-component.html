@@ -1,5 +1,5 @@
 <form [formGroup]="form()" (ngSubmit)="handleNgSubmit()">
-  <div class="mb-3">
+  <div class="mt-4">
     <label
       for="name"
       class="form-label">
@@ -10,13 +10,11 @@
       id="name"
       class="form-control"
       [formControl]="form().controls['name']">
-    @if (controlErrorMessageIsVisible(form().controls['name'])) {
-      <control-error
-        [controlErrors]="form().controls['name'].errors">
-      </control-error>
-    }
+    <control-error
+      [control]="form().controls['name']">
+    </control-error>
   </div>
-  <div class="mb-3">
+  <div class="mt-4">
     <label
       for="email"
       class="form-label">
@@ -28,16 +26,14 @@
       class="form-control"
       autocomplete="username"
       [formControl]="form().controls['email']">
-    @if (controlErrorMessageIsVisible(form().controls['email'])) {
-      <control-error
-        [controlErrors]="form().controls['email'].errors">
-      </control-error>
-    }
+    <control-error
+      [control]="form().controls['email']">
+    </control-error>
   </div>
   @if (passwordFormGroup.enabled === true) {
     <div class="row">
-      <div class="col-lg">
-        <div class="mb-3">
+      <div class="col-lg mt-4">
+        <div>
           <label
             for="password"
             class="form-label">
@@ -49,15 +45,13 @@
             class="form-control"
             autocomplete="new-password"
             [formControl]="passwordFormGroup.controls['password']">
-          @if (controlErrorMessageIsVisible(passwordFormGroup.controls['password'])) {
-            <control-error
-              [controlErrors]="passwordFormGroup.controls['password'].errors">
-            </control-error>
-          }
+          <control-error
+            [control]="passwordFormGroup.controls['password']">
+          </control-error>
         </div>
       </div>
-      <div class="col-lg">
-        <div class="mb-3">
+      <div class="col-lg mt-4">
+        <div>
           <label
             for="passwordConfirmation"
             class="form-label">
@@ -69,11 +63,9 @@
             class="form-control"
             autocomplete="new-password"
             [formControl]="passwordFormGroup.controls['passwordConfirmation']">
-          @if (controlErrorMessageIsVisible(passwordFormGroup.controls['passwordConfirmation'])) {
-            <control-error
-              [controlErrors]="passwordFormGroup.controls['passwordConfirmation'].errors">
-            </control-error>
-          }
+          <control-error
+            [control]="passwordFormGroup.controls['passwordConfirmation']">
+          </control-error>
           @if (passwordFormGroup.errors?.['passwordConfirmation']) {
             <div class="control-error">
               Password and password confirmation do not match.
@@ -83,7 +75,7 @@
       </div>
     </div>
   }
-  <div class="text-center">
+  <div class="text-center mt-4">
     <button
       type="submit"
       class="button"

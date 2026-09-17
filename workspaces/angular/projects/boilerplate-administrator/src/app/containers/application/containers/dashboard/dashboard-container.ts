@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   imports: [],
   templateUrl: './dashboard-container.html',
   styleUrl: './dashboard-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardContainer {
 

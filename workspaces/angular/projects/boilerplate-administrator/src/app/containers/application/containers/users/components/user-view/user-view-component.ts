@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { StatusPipe } from '../../../../../../../../../../utils/pipes/status/status-pipe';
+import { StatusPipe } from '@app/boilerplate-utils';
 import { ViewComponentClass } from '@bruno-bombonate/ngx-classes';
 
 @Component({
@@ -8,10 +8,10 @@ import { ViewComponentClass } from '@bruno-bombonate/ngx-classes';
   imports: [
     // pipes
     DatePipe,
-    StatusPipe
+    StatusPipe,
   ],
   templateUrl: './user-view-component.html',
   styleUrl: './user-view-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserViewComponent extends ViewComponentClass { }
+export class UserViewComponent extends ViewComponentClass {}

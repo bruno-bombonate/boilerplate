@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { UserSearchFormComponent } from '../../components/user-search-form/user-search-form-component';
 import { UserListComponent } from '../../components/user-list/user-list-component';
 import { ListContainerClass, SearchParamType, SearchParamValueType } from '@bruno-bombonate/ngx-classes';
-import { HttpService } from '../../../../../../utils/services/http/http-service';
+import { HttpService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -11,11 +11,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [
     // components
     UserSearchFormComponent,
-    UserListComponent
+    UserListComponent,
   ],
   templateUrl: './users-list-container.html',
   styleUrl: './users-list-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListContainer extends ListContainerClass {
 
@@ -30,7 +30,7 @@ export class UsersListContainer extends ListContainerClass {
     { name: 'userId', type: SearchParamType.QueryParam, valueType: SearchParamValueType.Number },
     { name: 'userName', type: SearchParamType.QueryParam, valueType: SearchParamValueType.String },
     { name: 'userEmail', type: SearchParamType.QueryParam, valueType: SearchParamValueType.String },
-    { name: 'userStatus', type: SearchParamType.QueryParam, valueType: SearchParamValueType.Boolean }
+    { name: 'userStatus', type: SearchParamType.QueryParam, valueType: SearchParamValueType.Boolean },
   ];
 
   protected override getList(): void {
@@ -45,9 +45,9 @@ export class UsersListContainer extends ListContainerClass {
             this.listLoading.set(false);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.listLoading.set(false);
-          }
+          },
         });
     }
   }

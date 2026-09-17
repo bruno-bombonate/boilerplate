@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { API_BASE_URL } from '@app/boilerplate-utils';
 
 import { AdministratorsListContainer } from './administrators-list-container';
 
@@ -8,13 +12,18 @@ describe('AdministratorsListContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdministratorsListContainer]
-    })
-    .compileComponents();
+      imports: [AdministratorsListContainer],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: API_BASE_URL, useValue: 'http://localhost' },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AdministratorsListContainer);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

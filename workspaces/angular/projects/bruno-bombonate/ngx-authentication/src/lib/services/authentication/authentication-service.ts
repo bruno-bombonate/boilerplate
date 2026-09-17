@@ -8,17 +8,17 @@ export class AuthenticationService {
 
   private readonly platformId = inject(PLATFORM_ID);
 
-  public setAuthentication(authentication: any, rememberMe: boolean): void {
+  public setAuthentication<T>(authentication: T, rememberMe: boolean): void {
     if (isPlatformBrowser(this.platformId)) {
-      authentication = JSON.stringify(authentication);
+      const serializedAuthentication = JSON.stringify(authentication);
       rememberMe
-        ? localStorage.setItem('authentication', authentication)
-        : sessionStorage.setItem('authentication', authentication);
+        ? localStorage.setItem('authentication', serializedAuthentication)
+        : sessionStorage.setItem('authentication', serializedAuthentication);
     }
   }
 
-  public getAuthentication(): null | any {
-    let authentication = null;
+  public getAuthentication<T>(): T | null {
+    let authentication: T | null = null;
     if (isPlatformBrowser(this.platformId)) {
       const localStorageAuthentication = localStorage.getItem('authentication');
       const sessionStorageAuthentication = sessionStorage.getItem('authentication');

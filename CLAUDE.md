@@ -4,13 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository overview
 
-This is a personal full-stack boilerplate with three independent npm workspaces under `workspaces/`, each with its own `package.json`/lockfile (no root-level package manager ties them together — always `cd` into the relevant workspace before running npm/ng/nest commands):
+This is a personal full-stack boilerplate with two independent npm workspaces under `workspaces/`, each with its own `package.json`/lockfile (no root-level package manager ties them together — always `cd` into the relevant workspace before running npm/ng/nest commands):
 
-- **`workspaces/angular`** — Angular 20 multi-project workspace (the current, in-use frontend).
-- **`workspaces/angular-21`** — a freshly scaffolded, empty Angular 21 workspace (`angular.json` has no projects yet). This is the in-progress target of a migration off `workspaces/angular` (see recent commit "Starting the update to Angular 21"). Don't assume it has the app structure described below until the migration populates it.
+- **`workspaces/angular`** — Angular 21 multi-project workspace (zoneless by default, SSR mandatory for both apps).
 - **`workspaces/nest`** — NestJS 9 monorepo backend.
 
-Both the Angular and Nest workspaces mirror the same two-app shape: a **user-facing app** and an **administrator-facing app**, each with its own API/site, auth, and port.
+Both workspaces mirror the same two-app shape: a **user-facing app** and an **administrator-facing app**, each with its own API/site, auth, and port. `workspaces/angular` was migrated from an Angular 20 workspace; that migration's decisions and rationale (naming conventions, zoneless/SSR findings, library extraction) are logged in `docs/plano-migracao-angular-21.md` as a living history — consult it before assuming an odd-looking pattern here is unintentional.
 
 ## Commands
 
@@ -21,16 +20,12 @@ npm run boilerplate-user:start:local          # serve boilerplate-user on :5011
 npm run boilerplate-administrator:start:local # serve boilerplate-administrator on :6011
 npm run boilerplate:start:local               # serve both concurrently
 ng build <project>                            # build a specific project (see angular.json for project names)
-ng test <project>                             # run Karma unit tests for a project
+ng test <project>                             # run Vitest unit tests for a project (not Karma)
 ```
 
-Projects registered in `angular.json`: `boilerplate-user`, `boilerplate-administrator`, and four publishable libraries under `@bruno-bombonate/*` (`ngx-classes`, `ngx-toast`, `ngx-authentication`, `ngx-seo`, `ngx-forms`). These libraries live in `projects/bruno-bombonate/*` and are published to npm independently — bumping their version in `package.json` is a real release, not just an internal version bump.
+Projects registered in `angular.json`: `boilerplate-user`, `boilerplate-administrator`, `boilerplate-utils` (internal, unpublished — see below), and five publishable libraries under `@bruno-bombonate/*` (`ngx-classes`, `ngx-toast`, `ngx-authentication`, `ngx-seo`, `ngx-forms`). The `ngx-*` libraries live in `projects/bruno-bombonate/*` and are published to npm independently — bumping their version in `package.json` is a real release, not just an internal version bump; their `README.md` is the source of truth for their full public API and must stay in sync with it.
 
-### Angular 21 (`workspaces/angular-21`)
-
-Standard Angular CLI commands (`ng serve`, `ng build`, `ng test` — Vitest here, not Karma). No projects exist yet.
-
-`AGENTS.md` in this workspace encodes house style for new Angular code and should be followed for any work here: standalone components (no explicit `standalone: true`, it's the v20+ default), signals for state (`input()`/`output()`, `computed()`, no `mutate` — use `update`/`set`), `inject()` over constructor injection, native control flow (`@if`/`@for`/`@switch`), `class`/`style` bindings instead of `ngClass`/`ngStyle`, `ChangeDetectionStrategy.OnPush`, reactive forms, `NgOptimizedImage`, and no `@HostBinding`/`@HostListener` (use the `host` object instead). Code must pass AXE checks and meet WCAG AA.
+`AGENTS.md` in this workspace encodes house style for Angular code and should be followed for any work here: standalone components (no explicit `standalone: true`, it's the default), signals for state (`input()`/`output()`, `computed()`, no `mutate` — use `update`/`set`), `inject()` over constructor injection, native control flow (`@if`/`@for`/`@switch`), `class`/`style` bindings instead of `ngClass`/`ngStyle`, `ChangeDetectionStrategy.OnPush` (kept as house style even though zoneless no longer requires it), reactive forms, `NgOptimizedImage`, and no `@HostBinding`/`@HostListener` (use the `host` object instead). Code must pass AXE checks and meet WCAG AA. `provideZonelessChangeDetection()` is **not** needed in `app.config.ts` — zoneless is automatic in v21 when `zone.js` is absent from polyfills.
 
 ### Nest (`workspaces/nest`)
 
@@ -64,14 +59,14 @@ Both apps use `passport-jwt` with per-app secret/expiry configured through env v
 
 ### Angular frontend (`workspaces/angular`)
 
-Angular CLI multi-project workspace (`angular.json`) with SSR enabled (`@angular/ssr`, `server.ts`, `main.server.ts` per project) for both `boilerplate-user` and `boilerplate-administrator`. Each app follows the same layout under `src/app`:
+Angular CLI multi-project workspace (`angular.json`) with SSR enabled (`@angular/ssr`, `server.ts`, `main.server.ts` per project) for both `boilerplate-user` and `boilerplate-administrator`. Each app follows the same layout under `src/app/containers`:
 
-- `containers/authentication` and `containers/application` — route-level containers, split along the same auth/app boundary the Nest guards enforce.
-- `utils/services` — app-local services (in addition to whatever the shared `@bruno-bombonate/*` libraries provide).
+- `authentication/` and `application/` — the two top-level route containers, split along the same auth/app boundary the Nest guards enforce, each with its own nested `containers/` for child routes.
+- Component naming: **`*-container`** for route-linked smart components (always generated via `ng generate component <name> --path=.../containers/<base-name> --flat`, folder = base name without the suffix, file = base name + `-container`), **`*-component`** for dumb/presentational components with a shape qualifier (`-form`, `-list`, `-search-form`, `-view`). Route files are plain `<base-name>-routes.ts` next to the container (no CLI schematic for these — they're data, not a class). `ng generate guard/pipe/interceptor/resolver` auto-append their own suffix — never include it in the name passed to those four schematics, unlike `component`/`service`/`directive`/`class`.
 
 Shared, independently-versioned libraries live in `projects/bruno-bombonate/*` and are consumed both inside this workspace and published externally as `@bruno-bombonate/ngx-*` packages — treat changes there as public API changes, not internal refactors.
 
-Global cross-app styling (Sass partials for buttons, cards, forms, nav, tables, toasts, etc., plus shared components/pipes/interceptors/validators/services used by both apps before the split into per-project libraries) lives under `workspaces/angular/utils`.
+Everything shared between the two apps that ISN'T meant for external publishing (no more relative-import `utils/` folder) lives in `projects/boilerplate-utils` (`@app/boilerplate-utils`, path-aliased in `tsconfig.json`, unpublished): `UserService`/`HttpService`/`LoadingService`, the `jwtInterceptor`/`createErrorInterceptor`/`loadingInterceptor` trio, `createApplicationContainerGuard(meEndpoint, signInRoute)`, and the shared auth/profile form components. Anything that varies per app (storage key, API base URL, "who am I" endpoint, sign-in route) is parametrized via an `InjectionToken` (services/classes) or a factory-function parameter (interceptors/guards) — never hardcoded — and provided per app in that app's `app.config.ts`. Global cross-app Sass partials (buttons, cards, forms, nav, tables, toasts, fonts, etc.) live in `projects/boilerplate-utils/styles/` (outside the lib's `src/`, so `ng-packagr` doesn't touch them) and are consumed via `stylePreprocessorOptions.includePaths` in each app's `angular.json`, not file imports.
 
 ### Cross-cutting naming convention
 

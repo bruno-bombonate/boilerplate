@@ -1,0 +1,18 @@
+{
+  "name": "@app/boilerplate-utils",
+  "version": "0.0.0",
+  "peerDependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@bruno-bombonate/ngx-classes": "^21.0.0",
+    "@bruno-bombonate/ngx-forms": "^21.0.0",
+    "gsap": "^3.13.0",
+    "lodash": "^4.17.21"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}

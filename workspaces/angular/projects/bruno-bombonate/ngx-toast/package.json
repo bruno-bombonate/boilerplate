@@ -1,10 +1,11 @@
 {
   "name": "@bruno-bombonate/ngx-toast",
-  "version": "20.0.1",
+  "version": "21.0.0",
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "gsap": "^3.13.0"
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "gsap": "^3.13.0",
+    "rxjs": "^7.4.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

@@ -8,13 +8,12 @@ describe('ControlTipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ControlTipComponent]
-    })
-    .compileComponents();
+      imports: [ControlTipComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ControlTipComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

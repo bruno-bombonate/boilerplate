@@ -6,11 +6,11 @@ import { FormComponentClass } from '@bruno-bombonate/ngx-classes';
   selector: 'app-administrator-search-form',
   imports: [
     // modules
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './administrator-search-form-component.html',
   styleUrl: './administrator-search-form-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdministratorSearchFormComponent extends FormComponentClass {
 
@@ -19,8 +19,8 @@ export class AdministratorSearchFormComponent extends FormComponentClass {
       administratorId: new FormControl<null | number>(null),
       administratorName: new FormControl<null | string>(null),
       administratorEmail: new FormControl<null | string>(null),
-      administratorStatus: new FormControl<null | boolean>(null)
-    })
+      administratorStatus: new FormControl<null | boolean>(null),
+    }),
   );
 
 }

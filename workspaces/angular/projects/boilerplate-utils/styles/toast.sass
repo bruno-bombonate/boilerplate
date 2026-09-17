@@ -1,0 +1,55 @@
+
+$TOAST_min-width: 390px
+$TOAST_BACKGROUND_COLOR: #000000
+$TOAST_COLOR: #FFFFFF
+
+$TOAST_SUCCESS_BACKGROUND_COLOR: #28A745
+$TOAST_SUCCESS_COLOR: #FFFFFF
+
+$TOAST_ERROR_BACKGROUND_COLOR: #DC3545
+$TOAST_ERROR_COLOR: #FFFFFF
+
+$TOAST_WARNING_BACKGROUND_COLOR: #FFC107
+$TOAST_WARNING_COLOR: #000000
+
+$TOAST_INFO_BACKGROUND_COLOR: #17A2B8
+$TOAST_INFO_COLOR: #FFFFFF
+
+toast
+  position: fixed
+  z-index: 1
+  bottom: 0px
+  left: 0px
+  display: block
+  min-width: $TOAST_min-width
+  width: 100%
+  text-align: center
+  padding: 0px 32px 32px 32px
+  transform: translate(0px, 100%)
+
+.toast
+  display: inline-flex
+  align-items: center
+  background-color: $TOAST_BACKGROUND_COLOR
+  line-height: 1
+  text-align: left
+  color: $TOAST_COLOR
+  padding: 16px
+  border-radius: 4px
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10)
+
+.toast-success
+  background-color: $TOAST_SUCCESS_BACKGROUND_COLOR
+  color: $TOAST_SUCCESS_COLOR
+
+.toast-error
+  background-color: $TOAST_ERROR_BACKGROUND_COLOR
+  color: $TOAST_ERROR_COLOR
+
+.toast-warning
+  background-color: $TOAST_WARNING_BACKGROUND_COLOR
+  color: $TOAST_WARNING_COLOR
+
+.toast-info
+  background-color: $TOAST_INFO_BACKGROUND_COLOR
+  color: $TOAST_INFO_COLOR

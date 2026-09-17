@@ -1,6 +1,9 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "cli": {
+    "packageManager": "npm"
+  },
   "newProjectRoot": "projects",
   "projects": {
     "boilerplate-user": {
@@ -32,11 +35,15 @@
               "node_modules/bootstrap/dist/css/bootstrap-utilities.min.css",
               "projects/boilerplate-user/src/styles.sass"
             ],
-            "allowedCommonJsDependencies": [
-              "lodash"
-            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/boilerplate-utils/styles"]
+            },
+            "allowedCommonJsDependencies": ["lodash"],
             "server": "projects/boilerplate-user/src/main.server.ts",
             "outputMode": "server",
+            "security": {
+              "allowedHosts": []
+            },
             "ssr": {
               "entry": "projects/boilerplate-user/src/server.ts"
             }
@@ -85,24 +92,8 @@
           },
           "defaultConfiguration": "local"
         },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n"
-        },
         "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/boilerplate-user/tsconfig.spec.json",
-            "inlineStyleLanguage": "sass",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/boilerplate-user/public"
-              }
-            ],
-            "styles": [
-              "projects/boilerplate-user/src/styles.sass"
-            ]
-          }
+          "builder": "@angular/build:unit-test"
         }
       }
     },
@@ -135,11 +126,15 @@
               "node_modules/bootstrap/dist/css/bootstrap-utilities.min.css",
               "projects/boilerplate-administrator/src/styles.sass"
             ],
-            "allowedCommonJsDependencies": [
-              "lodash"
-            ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["projects/boilerplate-utils/styles"]
+            },
+            "allowedCommonJsDependencies": ["lodash"],
             "server": "projects/boilerplate-administrator/src/main.server.ts",
             "outputMode": "server",
+            "security": {
+              "allowedHosts": []
+            },
             "ssr": {
               "entry": "projects/boilerplate-administrator/src/server.ts"
             }
@@ -188,24 +183,8 @@
           },
           "defaultConfiguration": "local"
         },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n"
-        },
         "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "tsConfig": "projects/boilerplate-administrator/tsconfig.spec.json",
-            "inlineStyleLanguage": "sass",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/boilerplate-administrator/public"
-              }
-            ],
-            "styles": [
-              "projects/boilerplate-administrator/src/styles.sass"
-            ]
-          }
+          "builder": "@angular/build:unit-test"
         }
       }
     },
@@ -228,7 +207,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/bruno-bombonate/ngx-classes/tsconfig.spec.json"
           }
@@ -254,7 +233,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/bruno-bombonate/ngx-toast/tsconfig.spec.json"
           }
@@ -280,7 +259,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/bruno-bombonate/ngx-authentication/tsconfig.spec.json"
           }
@@ -306,7 +285,7 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/bruno-bombonate/ngx-seo/tsconfig.spec.json"
           }
@@ -332,9 +311,35 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/bruno-bombonate/ngx-forms/tsconfig.spec.json"
+          }
+        }
+      }
+    },
+    "boilerplate-utils": {
+      "projectType": "library",
+      "root": "projects/boilerplate-utils",
+      "sourceRoot": "projects/boilerplate-utils/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/boilerplate-utils/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/boilerplate-utils/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "tsConfig": "projects/boilerplate-utils/tsconfig.spec.json"
           }
         }
       }

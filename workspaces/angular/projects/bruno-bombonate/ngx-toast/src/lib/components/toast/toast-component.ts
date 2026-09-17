@@ -15,7 +15,7 @@ export class ToastComponent implements AfterViewInit {
   private readonly toastService = inject(ToastService);
   private readonly elementRef = inject(ElementRef);
   private readonly destroyRef = inject(DestroyRef);
-  
+
   private readonly toastAnimationInProgress = signal<boolean>(false);
   private readonly toastAnimationTimeout = signal<undefined | any>(undefined);
 
@@ -58,7 +58,7 @@ export class ToastComponent implements AfterViewInit {
 
     const toastAnimationInProgress = this.toastAnimationInProgress();
     const toastList = this.toastList();
-    
+
     if (toastAnimationInProgress === false) {
 
       this.toastAnimationInProgress.set(true);

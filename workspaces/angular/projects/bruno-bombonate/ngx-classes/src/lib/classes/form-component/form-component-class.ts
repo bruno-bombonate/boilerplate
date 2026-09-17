@@ -1,12 +1,14 @@
-import { Directive, OnChanges, OnInit, input, output, SimpleChanges } from '@angular/core';
+import { Directive, ElementRef, OnChanges, OnInit, inject, input, output, SimpleChanges } from '@angular/core';
 import { DestroyRefClass } from '../destroy-ref/destroy-ref-class';
-import { FormGroup, AbstractControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Subject, distinctUntilChanged, debounceTime } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive()
 export class FormComponentClass extends DestroyRefClass implements OnChanges, OnInit {
-  
+
+  protected readonly elementRef = inject(ElementRef);
+
   public readonly form = input<any>(new FormGroup({ }));
   public readonly formData = input<undefined | any>(undefined);
   public readonly formLoading = input<boolean>(false);
@@ -60,19 +62,12 @@ export class FormComponentClass extends DestroyRefClass implements OnChanges, On
       const valueMapped = this.mapInputValue(simpleChanges['formData'].currentValue);
       form.patchValue(valueMapped, { emitEvent: false });
     }
-    
+
   }
 
   public ngOnInit(): void {
     this.addFormValueChangesListener();
     this.addFormResetListener();
-  }
-  
-  public controlErrorMessageIsVisible(control: AbstractControl): boolean {
-    const controlErrorsIsNotNull = control.errors !== null;
-    const controlTouchedIsTrue = control.touched === true;
-    const controlDirtyIsTrue = control.dirty === true;
-    return controlErrorsIsNotNull && (controlTouchedIsTrue || controlDirtyIsTrue);
   }
 
   public handleNgSubmit(): void {
@@ -86,10 +81,9 @@ export class FormComponentClass extends DestroyRefClass implements OnChanges, On
       const valueMapped = this.mapOutputValue(form.value);
       this.formSubmit.emit(valueMapped);
     } else {
-      const invalidControlList = document.querySelectorAll('input.ng-invalid');
-      const invalidControlListFirst = invalidControlList[0];
-      if (invalidControlListFirst !== undefined) {
-        invalidControlListFirst.scrollIntoView({ block: 'center' });
+      const firstInvalidControl = this.elementRef.nativeElement.querySelector('.ng-invalid:not(form)');
+      if (firstInvalidControl) {
+        firstInvalidControl.scrollIntoView({ block: 'center' });
       }
     }
 

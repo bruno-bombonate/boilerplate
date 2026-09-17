@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-lg-6 offset-lg-3">
+<div class="row justify-content-center">
+  <div class="col-lg-6 mt-4">
     <div class="card">
       <h2>
         {{ activatedRoute.snapshot.title }}
@@ -10,11 +10,11 @@
       </app-sign-in-form>
     </div>
     <div class="text-center mt-4">
-      <p class="mb-0">
+      <p>
         Don't have an account?
         <a [routerLink]="['../', signUpContainerRoutes.path]">{{ signUpContainerRoutes.title }}</a>.
       </p>
-      <p class="mb-0">
+      <p>
         Forgot password?
         <a [routerLink]="['../', resetPasswordContainerRoutes.path]">{{ resetPasswordContainerRoutes.title }}</a>.
       </p>

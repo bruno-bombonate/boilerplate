@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { AdministratorsContainer } from './administrators-container';
 
@@ -8,13 +9,13 @@ describe('AdministratorsContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdministratorsContainer]
-    })
-    .compileComponents();
+      imports: [AdministratorsContainer],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AdministratorsContainer);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

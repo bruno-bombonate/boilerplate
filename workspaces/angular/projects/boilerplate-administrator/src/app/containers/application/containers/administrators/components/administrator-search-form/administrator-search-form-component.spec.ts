@@ -8,13 +8,12 @@ describe('AdministratorSearchFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AdministratorSearchFormComponent]
-    })
-    .compileComponents();
+      imports: [AdministratorSearchFormComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AdministratorSearchFormComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

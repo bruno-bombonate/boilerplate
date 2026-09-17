@@ -1,7 +1,7 @@
 
 # @bruno-bombonate/ngx-toast
 
-A package with ToastComponent and ToastService, that you can show success and error messages.
+A package with ToastComponent and ToastService, that you can show success, error, warning and info messages.
 
 ## Installation
 
@@ -19,6 +19,9 @@ npm install @bruno-bombonate/ngx-toast
 |18.0.0|18.x|
 |19.0.0|19.x|
 |20.0.1|20.x|
+|21.0.0|21.x|
+
+Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
 
 ## Usage
 
@@ -34,6 +37,16 @@ npm install @bruno-bombonate/ngx-toast
   type="button"
   (click)="toastError()">
   Error
+</button>
+<button
+  type="button"
+  (click)="toastWarning()">
+  Warning
+</button>
+<button
+  type="button"
+  (click)="toastInfo()">
+  Info
 </button>
 <toast>
 </toast>
@@ -66,6 +79,14 @@ export class AppComponent {
     this.toastService.error('The error message.');
   }
 
+  public toastWarning(): void {
+    this.toastService.warning('The warning message.');
+  }
+
+  public toastInfo(): void {
+    this.toastService.info('The info message.');
+  }
+
 }
 ```
 
@@ -81,6 +102,12 @@ $toast-success-color: #FFFFFF;
 
 $toast-error-background-color: #DC3545;
 $toast-error-color: #FFFFFF;
+
+$toast-warning-background-color: #FFC107;
+$toast-warning-color: #000000;
+
+$toast-info-background-color: #17A2B8;
+$toast-info-color: #FFFFFF;
 
 toast {
   position: fixed;
@@ -115,5 +142,41 @@ toast {
 .toast-error {
   background-color: $toast-error-background-color;
   color: $toast-error-color;
+}
+
+.toast-warning {
+  background-color: $toast-warning-background-color;
+  color: $toast-warning-color;
+}
+
+.toast-info {
+  background-color: $toast-info-background-color;
+  color: $toast-info-color;
+}
+```
+
+### Building your own toast UI
+
+You don't have to use `ToastComponent`. `ToastService` also exposes `send$: Observable<Toast>`, emitting every time `success`/`error`/`warning`/`info` is called — subscribe to it to drive your own toast/snackbar UI instead:
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { ToastService, Toast, ToastType } from '@bruno-bombonate/ngx-toast';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Component({ /* ... */ })
+export class MyOwnToastComponent {
+
+  private readonly toastService = inject(ToastService);
+
+  constructor() {
+    this.toastService.send$
+      .pipe(takeUntilDestroyed())
+      .subscribe((toast: Toast) => {
+        // toast.type is a ToastType ('success' | 'error' | 'warning' | 'info')
+        // toast.message is the string you passed to the service
+      });
+  }
+
 }
 ```

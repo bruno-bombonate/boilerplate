@@ -9,7 +9,7 @@
           </span>
         </p>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-6 mt-4 mt-lg-0">
         <p class="view-label">
           Registration date
           <span>
@@ -19,7 +19,7 @@
       </div>
     </div>
   }
-  <div class="mb-3">
+  <div [class.mt-4]="formData() !== undefined">
     <label
       for="name"
       class="form-label">
@@ -30,13 +30,11 @@
       id="name"
       class="form-control"
       [formControl]="form().controls['name']">
-    @if (controlErrorMessageIsVisible(form().controls['name'])) {
-      <control-error
-        [controlErrors]="form().controls['name'].errors">
-      </control-error>
-    }
+    <control-error
+      [control]="form().controls['name']">
+    </control-error>
   </div>
-  <div class="mb-3">
+  <div class="mt-4">
     <label
       for="email"
       class="form-label">
@@ -47,16 +45,14 @@
       id="email"
       class="form-control"
       [formControl]="form().controls['email']">
-    @if (controlErrorMessageIsVisible(form().controls['email'])) {
-      <control-error
-        [controlErrors]="form().controls['email'].errors">
-      </control-error>
-    }
+    <control-error
+      [control]="form().controls['email']">
+    </control-error>
   </div>
   @if (passwordFormGroup.enabled === true) {
     <div class="row">
-      <div class="col-lg">
-        <div class="mb-3">
+      <div class="col-lg mt-4">
+        <div>
           <label
             for="password"
             class="form-label">
@@ -67,15 +63,13 @@
             id="password"
             class="form-control"
             [formControl]="passwordFormGroup.controls['password']">
-          @if (controlErrorMessageIsVisible(passwordFormGroup.controls['password'])) {
-            <control-error
-              [controlErrors]="passwordFormGroup.controls['password'].errors">
-            </control-error>
-          }
+          <control-error
+            [control]="passwordFormGroup.controls['password']">
+          </control-error>
         </div>
       </div>
-      <div class="col-lg">
-        <div class="mb-3">
+      <div class="col-lg mt-4">
+        <div>
           <label
             for="passwordConfirmation"
             class="form-label">
@@ -86,11 +80,9 @@
             id="passwordConfirmation"
             class="form-control"
             [formControl]="passwordFormGroup.controls['passwordConfirmation']">
-          @if (controlErrorMessageIsVisible(passwordFormGroup.controls['passwordConfirmation'])) {
-            <control-error
-              [controlErrors]="passwordFormGroup.controls['passwordConfirmation'].errors">
-            </control-error>
-          }
+          <control-error
+            [control]="passwordFormGroup.controls['passwordConfirmation']">
+          </control-error>
           @if (passwordFormGroup.errors?.['passwordConfirmation']) {
             <div class="control-error">
               Password and password confirmation do not match.
@@ -100,7 +92,7 @@
       </div>
     </div>
   }
-  <div class="mb-3">
+  <div class="mt-4">
     <label
       for="status"
       class="form-label">
@@ -114,15 +106,13 @@
       <option [ngValue]="true">Active</option>
       <option [ngValue]="false">Inactive</option>
     </select>
-    @if (controlErrorMessageIsVisible(form().controls['status'])) {
-      <control-error
-        [controlErrors]="form().controls['status'].errors">
-      </control-error>
-    }
+    <control-error
+      [control]="form().controls['status']">
+    </control-error>
   </div>
   <button
     type="submit"
-    class="button">
+    class="button mt-4">
     @if (formData() === undefined) {
       Add
     } @else {

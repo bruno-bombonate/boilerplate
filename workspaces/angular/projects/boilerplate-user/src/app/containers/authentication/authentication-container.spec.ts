@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { AuthenticationContainer } from './authentication-container';
 
@@ -8,13 +9,13 @@ describe('AuthenticationContainer', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AuthenticationContainer]
-    })
-    .compileComponents();
+      imports: [AuthenticationContainer],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AuthenticationContainer);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
   it('should create', () => {

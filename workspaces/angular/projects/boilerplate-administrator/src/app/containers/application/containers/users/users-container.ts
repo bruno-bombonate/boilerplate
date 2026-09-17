@@ -4,11 +4,11 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-users-container',
   imports: [
-    // components
-    RouterOutlet
+    // directives
+    RouterOutlet,
   ],
   templateUrl: './users-container.html',
   styleUrl: './users-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UsersContainer { }
+export class UsersContainer {}

@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { StatusPipe } from '../../../../../../../../../../utils/pipes/status/status-pipe';
+import { StatusPipe } from '@app/boilerplate-utils';
 import { ListComponentClass } from '@bruno-bombonate/ngx-classes';
 
 @Component({
@@ -9,10 +9,10 @@ import { ListComponentClass } from '@bruno-bombonate/ngx-classes';
     // directives
     RouterLink,
     // pipes
-    StatusPipe
+    StatusPipe,
   ],
   templateUrl: './administrator-list-component.html',
   styleUrl: './administrator-list-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdministratorListComponent extends ListComponentClass { }
+export class AdministratorListComponent extends ListComponentClass {}

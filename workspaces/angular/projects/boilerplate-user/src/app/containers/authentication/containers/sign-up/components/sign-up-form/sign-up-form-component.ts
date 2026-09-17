@@ -2,7 +2,7 @@ import { Component, ChangeDetectionStrategy, OnChanges, input, SimpleChanges } f
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ControlErrorComponent } from '@bruno-bombonate/ngx-forms';
 import { FormComponentClass } from '@bruno-bombonate/ngx-classes';
-import { passwordConfirmation } from '../../../../../../../../../../utils/validators/password-confirmation/password-confirmation-validator';
+import { passwordConfirmation } from '@app/boilerplate-utils';
 import { cloneDeep } from 'lodash';
 
 @Component({
@@ -11,11 +11,11 @@ import { cloneDeep } from 'lodash';
     // modules
     ReactiveFormsModule,
     // components
-    ControlErrorComponent
+    ControlErrorComponent,
   ],
   templateUrl: './sign-up-form-component.html',
   styleUrl: './sign-up-form-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpFormComponent extends FormComponentClass implements OnChanges {
 
@@ -26,8 +26,8 @@ export class SignUpFormComponent extends FormComponentClass implements OnChanges
       password: new FormGroup({
         password: new FormControl<null | string>(null, [Validators.required]),
         passwordConfirmation: new FormControl<null | boolean>(null, [Validators.required]),
-      }, { validators: passwordConfirmation('password', 'passwordConfirmation') })
-    })
+      }, { validators: passwordConfirmation('password', 'passwordConfirmation') }),
+    }),
   );
 
   public get passwordFormGroup() {

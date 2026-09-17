@@ -1,0 +1,36 @@
+
+@use 'imports/variables' as variables
+
+html,
+body
+  height: 100%
+
+body
+  min-width: variables.$min-width
+  background-color: variables.$color-white
+  font-family: 'Roboto'
+  font-size: 16px
+  line-height: 1.5
+  color: variables.$color-black
+  print-color-adjust: exact
+
+p
+  margin: 0px
+
+a
+  font-weight: 300
+  text-decoration: none
+  color: variables.$color-black
+  &:hover
+    text-decoration: underline
+    color: inherit
+
+.container
+  max-width: 1326px
+
+.form-label,
+.view-label,
+.th,
+th
+  font-size: 14px
+  font-weight: 500

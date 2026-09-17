@@ -8,6 +8,8 @@ var ToastType;
 (function (ToastType) {
     ToastType["Success"] = "success";
     ToastType["Error"] = "error";
+    ToastType["Warning"] = "warning";
+    ToastType["Info"] = "info";
 })(ToastType || (ToastType = {}));
 
 class ToastService {
@@ -24,10 +26,16 @@ class ToastService {
     error(message) {
         this.send = { type: ToastType.Error, message };
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ToastService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ToastService, providedIn: 'root' });
+    warning(message) {
+        this.send = { type: ToastType.Warning, message };
+    }
+    info(message) {
+        this.send = { type: ToastType.Info, message };
+    }
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: ToastService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
+    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: ToastService, providedIn: 'root' });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ToastService, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: ToastService, decorators: [{
             type: Injectable,
             args: [{
                     providedIn: 'root'
@@ -38,9 +46,9 @@ class ToastComponent {
     toastService = inject(ToastService);
     elementRef = inject(ElementRef);
     destroyRef = inject(DestroyRef);
-    toastAnimationInProgress = signal(false);
-    toastAnimationTimeout = signal(undefined);
-    toastList = signal([]);
+    toastAnimationInProgress = signal(false, ...(ngDevMode ? [{ debugName: "toastAnimationInProgress" }] : /* istanbul ignore next */ []));
+    toastAnimationTimeout = signal(undefined, ...(ngDevMode ? [{ debugName: "toastAnimationTimeout" }] : /* istanbul ignore next */ []));
+    toastList = signal([], ...(ngDevMode ? [{ debugName: "toastList" }] : /* istanbul ignore next */ []));
     toastTimelineShow() {
         const toastAnimationInProgress = this.toastAnimationInProgress();
         const toastList = this.toastList();
@@ -105,12 +113,12 @@ class ToastComponent {
             }
         });
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ToastComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
-    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "20.0.5", type: ToastComponent, isStandalone: true, selector: "toast", ngImport: i0, template: "@if (toastList().length !== 0) {\r\n  <div\r\n    class=\"toast\"\r\n    [class.toast-error]=\"toastList()[0].type === 'error'\"\r\n    [class.toast-success]=\"toastList()[0].type === 'success'\">\r\n    {{ toastList()[0].message }}\r\n  </div>\r\n}\r\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: ToastComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+    static ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "21.2.23", type: ToastComponent, isStandalone: true, selector: "toast", ngImport: i0, template: "@if (toastList().length !== 0) {\n  <div\n    class=\"toast\"\n    [class.toast-error]=\"toastList()[0].type === 'error'\"\n    [class.toast-success]=\"toastList()[0].type === 'success'\"\n    [class.toast-warning]=\"toastList()[0].type === 'warning'\"\n    [class.toast-info]=\"toastList()[0].type === 'info'\">\n    {{ toastList()[0].message }}\n  </div>\n}\n", changeDetection: i0.ChangeDetectionStrategy.OnPush });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "20.0.5", ngImport: i0, type: ToastComponent, decorators: [{
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: ToastComponent, decorators: [{
             type: Component,
-            args: [{ selector: 'toast', imports: [], changeDetection: ChangeDetectionStrategy.OnPush, template: "@if (toastList().length !== 0) {\r\n  <div\r\n    class=\"toast\"\r\n    [class.toast-error]=\"toastList()[0].type === 'error'\"\r\n    [class.toast-success]=\"toastList()[0].type === 'success'\">\r\n    {{ toastList()[0].message }}\r\n  </div>\r\n}\r\n" }]
+            args: [{ selector: 'toast', imports: [], changeDetection: ChangeDetectionStrategy.OnPush, template: "@if (toastList().length !== 0) {\n  <div\n    class=\"toast\"\n    [class.toast-error]=\"toastList()[0].type === 'error'\"\n    [class.toast-success]=\"toastList()[0].type === 'success'\"\n    [class.toast-warning]=\"toastList()[0].type === 'warning'\"\n    [class.toast-info]=\"toastList()[0].type === 'info'\">\n    {{ toastList()[0].message }}\n  </div>\n}\n" }]
         }] });
 
 /*

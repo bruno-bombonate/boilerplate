@@ -2,9 +2,9 @@ import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/cor
 import { SignUpFormComponent } from './components/sign-up-form/sign-up-form-component';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { HttpService } from '../../../../utils/services/http/http-service';
+import { HttpService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
-import { signInContainerRoutes } from '../sign-in/sign-in-container.routes';
+import { signInContainerRoutes } from '../sign-in/sign-in-routes';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -13,11 +13,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     // components
     SignUpFormComponent,
     // directives
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './sign-up-container.html',
   styleUrl: './sign-up-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpContainer extends DestroyRefClass {
 
@@ -41,9 +41,9 @@ export class SignUpContainer extends DestroyRefClass {
             this.router.navigate(['/sign-in']);
           },
           error: (response: any) => {
-            this.toastService.error(response.message);
+            this.toastService.error(response.error.message);
             this.formLoading.set(false);
-          }
+          },
         });
     }
   }

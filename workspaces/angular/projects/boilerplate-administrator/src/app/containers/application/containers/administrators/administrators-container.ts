@@ -4,11 +4,11 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-administrators-container',
   imports: [
-    // components
-    RouterOutlet
+    // directives
+    RouterOutlet,
   ],
   templateUrl: './administrators-container.html',
   styleUrl: './administrators-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdministratorsContainer { }
+export class AdministratorsContainer {}

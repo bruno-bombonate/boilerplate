@@ -1,23 +1,24 @@
 {
   "name": "@bruno-bombonate/ngx-authentication",
-  "version": "20.0.0",
+  "version": "21.0.0",
   "peerDependencies": {
-    "@angular/common": "^20.0.0",
-    "@angular/core": "^20.0.0"
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"
   },
   "sideEffects": false,
   "module": "fesm2022/bruno-bombonate-ngx-authentication.mjs",
-  "typings": "index.d.ts",
+  "typings": "types/bruno-bombonate-ngx-authentication.d.ts",
   "exports": {
     "./package.json": {
       "default": "./package.json"
     },
     ".": {
-      "types": "./index.d.ts",
+      "types": "./types/bruno-bombonate-ngx-authentication.d.ts",
       "default": "./fesm2022/bruno-bombonate-ngx-authentication.mjs"
     }
-  }
+  },
+  "type": "module"
 }

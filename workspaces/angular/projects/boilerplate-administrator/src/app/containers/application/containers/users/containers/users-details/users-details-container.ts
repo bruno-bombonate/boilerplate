@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, OnInit, inject, signal } from '@angular/core';
 import { UserViewComponent } from '../../components/user-view/user-view-component';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { HttpService } from '../../../../../../utils/services/http/http-service';
+import { HttpService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { Router, ActivatedRoute } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -10,11 +10,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-users-details-container',
   imports: [
     // components
-    UserViewComponent
+    UserViewComponent,
   ],
   templateUrl: './users-details-container.html',
   styleUrl: './users-details-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersDetailsContainer extends DestroyRefClass implements OnInit {
 
@@ -36,9 +36,9 @@ export class UsersDetailsContainer extends DestroyRefClass implements OnInit {
           this.user.set(response.data);
         },
         error: (response: any) => {
-          this.toastService.error(response.message);
+          this.toastService.error(response.error.message);
           this.router.navigate(['../'], { relativeTo: this.activatedRoute });
-        }
+        },
       });
 
   }

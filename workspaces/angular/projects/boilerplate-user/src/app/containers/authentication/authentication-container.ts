@@ -4,13 +4,11 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-authentication-container',
   imports: [
-    // components
-    RouterOutlet
+    // directives
+    RouterOutlet,
   ],
   templateUrl: './authentication-container.html',
   styleUrl: './authentication-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AuthenticationContainer {
-
-}
+export class AuthenticationContainer {}

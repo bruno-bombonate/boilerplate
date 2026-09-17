@@ -2,7 +2,9 @@
   <div
     class="toast"
     [class.toast-error]="toastList()[0].type === 'error'"
-    [class.toast-success]="toastList()[0].type === 'success'">
+    [class.toast-success]="toastList()[0].type === 'success'"
+    [class.toast-warning]="toastList()[0].type === 'warning'"
+    [class.toast-info]="toastList()[0].type === 'info'">
     {{ toastList()[0].message }}
   </div>
 }
