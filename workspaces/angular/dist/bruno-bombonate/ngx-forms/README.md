@@ -157,9 +157,9 @@ import { provideNgxForms, ControlErrors, ControlErrorVisible } from '@bruno-bomb
 
 export const controlErrors: ControlErrors = {
   // overriding a built-in message
-  required: () => 'Por favor, informe esse campo.',
+  required: () => 'Please fill this field.',
   // adding a message for your own custom validator's error key
-  custom: (error: any) => 'Minha mensagem de erro customizada...'
+  custom: (error: any) => 'My custom error message...'
 };
 
 // Default rule is: control.errors !== null && (control.touched || control.dirty).

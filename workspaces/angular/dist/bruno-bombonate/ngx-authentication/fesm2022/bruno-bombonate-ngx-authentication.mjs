@@ -6,10 +6,10 @@ class AuthenticationService {
     platformId = inject(PLATFORM_ID);
     setAuthentication(authentication, rememberMe) {
         if (isPlatformBrowser(this.platformId)) {
-            authentication = JSON.stringify(authentication);
+            const serializedAuthentication = JSON.stringify(authentication);
             rememberMe
-                ? localStorage.setItem('authentication', authentication)
-                : sessionStorage.setItem('authentication', authentication);
+                ? localStorage.setItem('authentication', serializedAuthentication)
+                : sessionStorage.setItem('authentication', serializedAuthentication);
         }
     }
     getAuthentication() {

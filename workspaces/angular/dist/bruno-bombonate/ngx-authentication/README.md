@@ -27,8 +27,8 @@ Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch us
 
 `AuthenticationService` has four methods:
 
-- `setAuthentication(authentication: any, rememberMe: boolean): void` — stores `authentication` as JSON, in `localStorage` when `rememberMe` is `true`, in `sessionStorage` otherwise (so it's cleared when the browser tab closes).
-- `getAuthentication(): null | any` — reads back whatever was stored (checking `localStorage` first, then `sessionStorage`), parsed from JSON. Returns `null` if nothing is stored, or when called on the server (SSR-safe: every method is a no-op outside the browser).
+- `setAuthentication<T>(authentication: T, rememberMe: boolean): void` — stores `authentication` as JSON, in `localStorage` when `rememberMe` is `true`, in `sessionStorage` otherwise (so it's cleared when the browser tab closes).
+- `getAuthentication<T>(): T | null` — reads back whatever was stored (checking `localStorage` first, then `sessionStorage`), parsed from JSON. Type it with the same shape you passed to `setAuthentication` (for example `getAuthentication<{ token: string }>()`). Returns `null` if nothing is stored, or when called on the server (SSR-safe: every method is a no-op outside the browser).
 - `isLoggedIn(): boolean` — `true` if there's anything stored in either `localStorage` or `sessionStorage`, without parsing it. Cheaper than `getAuthentication() !== null` when you only need a yes/no answer (e.g. inside a route guard).
 - `unsetAuthentication(): void` — removes the stored value from both `localStorage` and `sessionStorage`.
 
@@ -109,8 +109,7 @@ export const applicationGuard: CanActivateFn = () => {
     return true;
   }
 
-  router.navigate(['/sign-in']);
-  return false;
+  return router.createUrlTree(['/sign-in']);
 
 };
 ```
@@ -118,6 +117,10 @@ export const applicationGuard: CanActivateFn = () => {
 `getAuthentication()` returns whatever object you originally passed to `setAuthentication` (for example `{ token: '...', user: { ... } }`), so you can read it wherever you need the stored token or user without making a network call:
 
 ```typescript
-const authentication = authenticationService.getAuthentication();
+interface Authentication {
+  token: string;
+}
+
+const authentication = authenticationService.getAuthentication<Authentication>();
 const token = authentication?.token;
 ```
