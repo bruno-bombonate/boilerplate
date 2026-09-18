@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AdministratorsResetPasswordService } from './administrators-reset-password.service';
+import { AdministratorsResetPasswordService } from './administrators-reset-password.service.js';
 
 describe('AdministratorsResetPasswordService', () => {
   let service: AdministratorsResetPasswordService;

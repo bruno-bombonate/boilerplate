@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { ColumnDecimalTransformer } from '@app/boilerplate-database/utils/transformers/column-decimal-transformer.class';
+import { ColumnDecimalTransformer } from '../../../utils/transformers/column-decimal-transformer.class.js';
 
 @Entity()
 export class User {

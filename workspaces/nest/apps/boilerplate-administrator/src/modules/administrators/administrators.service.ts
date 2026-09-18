@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Administrator } from '@app/boilerplate-database/modules/administrators/entities/administrator.entity';
+import { Administrator } from '@app/boilerplate-database/modules/administrators/entities/administrator.entity.js';
 import { Repository, SelectQueryBuilder, InsertResult, FindOptionsWhere, UpdateResult } from 'typeorm';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class AdministratorsService {
     private readonly repository: Repository<Administrator>
   ) { }
 
-  private administratorQuery(options?: { where?: any, orderBy?: any, offset?: number, limit?: number }): SelectQueryBuilder<any> {
+  private administratorQuery(options?: { where?: any, orderBy?: any, offset?: null | number, limit?: null | number }): SelectQueryBuilder<any> {
 
     const query = this.repository
       .createQueryBuilder('administrator');
@@ -38,7 +38,7 @@ export class AdministratorsService {
     } else if (options?.orderBy?.administratorStatus) {
       query.orderBy('administrator.status', options.orderBy.administratorStatus);
     }
-    
+
     if (options?.offset) {
       query.offset(options.offset);
     }
@@ -59,7 +59,7 @@ export class AdministratorsService {
     return this.repository.update(where, administrator);
   }
 
-  public getAdministrators(options?: { where?: any, orderBy?: any, offset?: number, limit?: number }): SelectQueryBuilder<any[]> {
+  public getAdministrators(options?: { where?: any, orderBy?: any, offset?: null | number, limit?: null | number }): SelectQueryBuilder<any[]> {
     const administratorsQuery = this.administratorQuery(options);
     return administratorsQuery;
   }

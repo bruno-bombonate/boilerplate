@@ -9,12 +9,12 @@ export class BoilerplateEmailService {
   ) { }
 
   public sendResetPasswordEmail(email: string, name: string, url: string): void {
-    this.mailerService
+    void this.mailerService
       .sendMail({
         to: email,
         from: {
           name: 'Boilerplate',
-          address: process.env.APP_SMTP_USERNAME
+          address: process.env.APP_SMTP_USERNAME!
         },
         subject: 'Reset password',
         template: 'reset-password',

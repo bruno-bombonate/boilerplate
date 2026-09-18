@@ -4,12 +4,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // entities
-import { User } from './entities/user.entity';
-import { UserResetPassword } from './entities/user-reset-password.entity';
+import { User } from './entities/user.entity.js';
+import { UserResetPassword } from './entities/user-reset-password.entity.js';
 
 // subscribers
-import { UsersSubscriber } from './users.subscriber';
-import { UsersResetPasswordSubscriber } from './users-reset-password.subscriber';
+import { UsersSubscriber } from './users.subscriber.js';
+import { UsersResetPasswordSubscriber } from './users-reset-password.subscriber.js';
 
 @Module({
   imports: [

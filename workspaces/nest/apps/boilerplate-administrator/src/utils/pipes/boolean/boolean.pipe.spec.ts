@@ -1,4 +1,4 @@
-import { BooleanPipe } from './boolean.pipe';
+import { BooleanPipe } from './boolean.pipe.js';
 
 describe('BooleanPipe', () => {
   it('should be defined', () => {

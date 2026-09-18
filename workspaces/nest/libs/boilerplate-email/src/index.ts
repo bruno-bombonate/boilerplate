@@ -1,2 +1,2 @@
-export * from './boilerplate-email.module';
-export * from './boilerplate-email.service';
+export * from './boilerplate-email.module.js';
+export * from './boilerplate-email.service.js';

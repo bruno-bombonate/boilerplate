@@ -1,10 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { BoilerplateUserModule } from './../src/boilerplate-user.module';
+import request from 'supertest';
+import { App } from 'supertest/types';
+import { BoilerplateUserModule } from './../src/boilerplate-user.module.js';
 
 describe('BoilerplateUserController (e2e)', () => {
-  let app: INestApplication;
+  let app: INestApplication<App>;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -20,5 +21,9 @@ describe('BoilerplateUserController (e2e)', () => {
       .get('/')
       .expect(200)
       .expect('Hello World!');
+  });
+
+  afterEach(async () => {
+    await app.close();
   });
 });

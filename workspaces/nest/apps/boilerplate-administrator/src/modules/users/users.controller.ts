@@ -1,8 +1,8 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Query, Param, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { JwtGuard } from '../../utils/guards/jwt/jwt.guard';
-import { BooleanPipe } from '../../utils/pipes/boolean/boolean.pipe';
+import { UsersService } from './users.service.js';
+import { JwtGuard } from '../../utils/guards/jwt/jwt.guard.js';
+import { BooleanPipe } from '../../utils/pipes/boolean/boolean.pipe.js';
 
 @ApiTags('users')
 @Controller('users')

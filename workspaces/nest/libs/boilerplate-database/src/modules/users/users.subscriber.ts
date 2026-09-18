@@ -1,5 +1,5 @@
 import { EventSubscriber, EntitySubscriberInterface, DataSource, InsertEvent, UpdateEvent } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from './entities/user.entity.js';
 import { hash } from 'bcryptjs';
 
 @EventSubscriber()
@@ -22,7 +22,7 @@ export class UsersSubscriber implements EntitySubscriberInterface<User> {
   }
 
   public async beforeUpdate(updateEvent: UpdateEvent<User>): Promise<void> {
-    if (updateEvent.entity.password) {
+    if (updateEvent.entity?.password) {
       updateEvent.entity.password = await hash(updateEvent.entity.password, 10);
     }
   }

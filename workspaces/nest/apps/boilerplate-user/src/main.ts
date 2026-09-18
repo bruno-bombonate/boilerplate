@@ -1,10 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { BoilerplateUserModule } from './boilerplate-user.module';
+import { BoilerplateUserModule } from './boilerplate-user.module.js';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { env } from 'custom-env';
 
 async function bootstrap() {
 
-  require('custom-env').env(process.env.APP_ENV, process.cwd());
+  process.env.DOTENV_CONFIG_QUIET = 'true';
+  env(process.env.APP_ENV, process.cwd());
 
   const app = await NestFactory.create(BoilerplateUserModule);
   app.enableCors();
@@ -19,7 +21,7 @@ async function bootstrap() {
 
   SwaggerModule.setup('swagger', app, document);
 
-  await app.listen(process.env.APP_BOILERPLATE_USER_API_PORT);
+  await app.listen(process.env.APP_BOILERPLATE_USER_API_PORT!);
 
 }
-bootstrap();
+void bootstrap();

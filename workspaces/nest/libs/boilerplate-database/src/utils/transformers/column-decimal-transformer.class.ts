@@ -1,4 +1,3 @@
-
 export class ColumnDecimalTransformer {
 
   public to(data: number): number {

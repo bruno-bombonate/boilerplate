@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@app/boilerplate-database/modules/users/entities/user.entity';
+import { User } from '@app/boilerplate-database/modules/users/entities/user.entity.js';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UsersService {
     private readonly repository: Repository<User>
   ) { }
 
-  private userQuery(options?: { where?: any, orderBy?: any, offset?: number, limit?: number }): SelectQueryBuilder<any> {
+  private userQuery(options?: { where?: any, orderBy?: any, offset?: null | number, limit?: null | number }): SelectQueryBuilder<any> {
 
     const query = this.repository
       .createQueryBuilder('user');
@@ -51,7 +51,7 @@ export class UsersService {
 
   }
 
-  public getUsers(options?: { where?: any, orderBy?: any, offset?: number, limit?: number }): SelectQueryBuilder<any[]> {
+  public getUsers(options?: { where?: any, orderBy?: any, offset?: null | number, limit?: null | number }): SelectQueryBuilder<any[]> {
     const usersQuery = this.userQuery(options);
     return usersQuery;
   }

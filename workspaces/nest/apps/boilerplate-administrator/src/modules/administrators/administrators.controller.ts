@@ -1,18 +1,18 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Post, Body, UseGuards, Get, Request, Query, Param, HttpException, HttpStatus, Patch } from '@nestjs/common';
-import { AdministratorsService } from './administrators.service';
-import { AdministratorsResetPasswordService } from './administrators-reset-password.service';
+import { AdministratorsService } from './administrators.service.js';
+import { AdministratorsResetPasswordService } from './administrators-reset-password.service.js';
 import { JwtService } from '@nestjs/jwt';
 import { BoilerplateEmailService } from '@app/boilerplate-email';
 import { compare } from 'bcryptjs';
-import { JwtGuard } from 'apps/boilerplate-administrator/src/utils/guards/jwt/jwt.guard';
-import { AdministratorSignInDto } from './dto/administrator-sign-in.dto';
-import { AdministratorResetPasswordCreateDto } from './dto/administrator-reset-password-create.dto';
-import { AdministratorResetPasswordPatchDto } from './dto/administrator-reset-password-patch.dto';
-import { AdministratorChangePasswordDto } from './dto/administrator-change-password.dto';
-import { BooleanPipe } from 'apps/boilerplate-administrator/src/utils/pipes/boolean/boolean.pipe';
-import { AdministratorCreateDto } from './dto/administrator-create.dto';
-import { AdministratorUpdateDto } from './dto/administrator-update.dto';
+import { JwtGuard } from '../../utils/guards/jwt/jwt.guard.js';
+import { AdministratorSignInDto } from './dto/administrator-sign-in.dto.js';
+import { AdministratorResetPasswordCreateDto } from './dto/administrator-reset-password-create.dto.js';
+import { AdministratorResetPasswordPatchDto } from './dto/administrator-reset-password-patch.dto.js';
+import { AdministratorChangePasswordDto } from './dto/administrator-change-password.dto.js';
+import { BooleanPipe } from '../../utils/pipes/boolean/boolean.pipe.js';
+import { AdministratorCreateDto } from './dto/administrator-create.dto.js';
+import { AdministratorUpdateDto } from './dto/administrator-update.dto.js';
 
 @ApiTags('administrators')
 @Controller('administrators')
@@ -50,7 +50,7 @@ export class AdministratorsController {
       message: 'Your session has been successfully started.',
       data: {
         accessToken: this.jwtService.sign({ id: administratorFound.id }),
-        expiresIn: +process.env.APP_BOILERPLATE_ADMINISTRATOR_API_EXPIRES_IN
+        expiresIn: +process.env.APP_BOILERPLATE_ADMINISTRATOR_API_EXPIRES_IN!
       }
     };
 

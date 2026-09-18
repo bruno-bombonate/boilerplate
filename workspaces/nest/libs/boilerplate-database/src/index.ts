@@ -1,1 +1,1 @@
-export * from './boilerplate-database.module';
+export * from './boilerplate-database.module.js';

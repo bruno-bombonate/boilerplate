@@ -1,16 +1,16 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Post, Body, UseGuards, Get, Request, Param, HttpException, HttpStatus, Patch } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { UsersResetPasswordService } from './users-reset-password.service';
+import { UsersService } from './users.service.js';
+import { UsersResetPasswordService } from './users-reset-password.service.js';
 import { JwtService } from '@nestjs/jwt';
 import { BoilerplateEmailService } from '@app/boilerplate-email';
 import { compare } from 'bcryptjs';
-import { JwtGuard } from '../../utils/guards/jwt/jwt.guard';
-import { UserSignUpDto } from './dto/user-sign-up.dto';
-import { UserSignInDto } from './dto/user-sign-in.dto';
-import { UserResetPasswordCreateDto } from './dto/user-reset-password-create.dto';
-import { UserResetPasswordPatchDto } from './dto/user-reset-password-patch.dto';
-import { UserChangePasswordDto } from './dto/user-change-password.dto';
+import { JwtGuard } from '../../utils/guards/jwt/jwt.guard.js';
+import { UserSignUpDto } from './dto/user-sign-up.dto.js';
+import { UserSignInDto } from './dto/user-sign-in.dto.js';
+import { UserResetPasswordCreateDto } from './dto/user-reset-password-create.dto.js';
+import { UserResetPasswordPatchDto } from './dto/user-reset-password-patch.dto.js';
+import { UserChangePasswordDto } from './dto/user-change-password.dto.js';
 
 @ApiTags('users')
 @Controller('users')
@@ -66,7 +66,7 @@ export class UsersController {
       message: 'Your session has been successfully started.',
       data: {
         accessToken: this.jwtService.sign({ id: userFound.id }),
-        expiresIn: +process.env.APP_BOILERPLATE_USER_API_EXPIRES_IN
+        expiresIn: +process.env.APP_BOILERPLATE_USER_API_EXPIRES_IN!
       }
     };
 

@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { BoilerplateEmailService } from './boilerplate-email.service';
+import { BoilerplateEmailService } from './boilerplate-email.service.js';
 
 describe('BoilerplateEmailService', () => {
   let service: BoilerplateEmailService;

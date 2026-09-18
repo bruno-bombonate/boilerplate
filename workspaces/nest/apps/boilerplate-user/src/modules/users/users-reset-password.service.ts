@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserResetPassword } from '@app/boilerplate-database/modules/users/entities/user-reset-password.entity';
+import { UserResetPassword } from '@app/boilerplate-database/modules/users/entities/user-reset-password.entity.js';
 import { Repository, SelectQueryBuilder, InsertResult, FindOptionsWhere, UpdateResult } from 'typeorm';
-import { User } from '@app/boilerplate-database/modules/users/entities/user.entity';
+import { User } from '@app/boilerplate-database/modules/users/entities/user.entity.js';
 
 @Injectable()
 export class UsersResetPasswordService {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@app/boilerplate-database/modules/users/entities/user.entity';
+import { User } from '@app/boilerplate-database/modules/users/entities/user.entity.js';
 import { Repository, SelectQueryBuilder, InsertResult, FindOptionsWhere, UpdateResult } from 'typeorm';
 
 @Injectable()

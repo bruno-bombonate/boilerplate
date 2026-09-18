@@ -1,5 +1,5 @@
 import { EventSubscriber, EntitySubscriberInterface, DataSource, InsertEvent } from 'typeorm';
-import { AdministratorResetPassword } from './entities/administrator-reset-password.entity';
+import { AdministratorResetPassword } from './entities/administrator-reset-password.entity.js';
 import { randomBytes } from 'crypto';
 
 @EventSubscriber()

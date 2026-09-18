@@ -2,8 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "declaration": false,
+    "rootDir": "../..",
     "outDir": "../../dist/apps/boilerplate-user"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../../types/**/*.d.ts"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

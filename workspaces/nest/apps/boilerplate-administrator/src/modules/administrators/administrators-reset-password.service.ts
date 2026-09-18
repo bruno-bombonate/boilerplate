@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AdministratorResetPassword } from '@app/boilerplate-database/modules/administrators/entities/administrator-reset-password.entity';
+import { AdministratorResetPassword } from '@app/boilerplate-database/modules/administrators/entities/administrator-reset-password.entity.js';
 import { Repository, SelectQueryBuilder, InsertResult, FindOptionsWhere, UpdateResult } from 'typeorm';
-import { Administrator } from '@app/boilerplate-database/modules/administrators/entities/administrator.entity';
+import { Administrator } from '@app/boilerplate-database/modules/administrators/entities/administrator.entity.js';
 
 @Injectable()
 export class AdministratorsResetPasswordService {

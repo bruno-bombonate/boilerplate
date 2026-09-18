@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
-import { User } from './user.entity';
-import { ColumnDecimalTransformer } from '@app/boilerplate-database/utils/transformers/column-decimal-transformer.class';
+import { User } from './user.entity.js';
+import { ColumnDecimalTransformer } from '../../../utils/transformers/column-decimal-transformer.class.js';
 
 @Entity()
 export class UserResetPassword {

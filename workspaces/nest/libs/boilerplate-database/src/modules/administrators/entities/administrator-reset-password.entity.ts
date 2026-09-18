@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn, Column } from 'typeorm';
-import { Administrator } from './administrator.entity';
-import { ColumnDecimalTransformer } from '@app/boilerplate-database/utils/transformers/column-decimal-transformer.class';
+import { Administrator } from './administrator.entity.js';
+import { ColumnDecimalTransformer } from '../../../utils/transformers/column-decimal-transformer.class.js';
 
 @Entity()
 export class AdministratorResetPassword {

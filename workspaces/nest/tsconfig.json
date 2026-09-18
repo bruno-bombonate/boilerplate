@@ -1,35 +1,49 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "resolvePackageJsonExports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "rootDir": ".",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "types": [
+      "vitest/globals",
+      "node"
+    ],
     "paths": {
       "@app/boilerplate-database": [
-        "libs/boilerplate-database/src"
+        "./libs/boilerplate-database/src/index.ts"
       ],
       "@app/boilerplate-database/*": [
-        "libs/boilerplate-database/src/*"
+        "./libs/boilerplate-database/src/*"
       ],
       "@app/boilerplate-email": [
-        "libs/boilerplate-email/src"
+        "./libs/boilerplate-email/src/index.ts"
       ],
       "@app/boilerplate-email/*": [
-        "libs/boilerplate-email/src/*"
+        "./libs/boilerplate-email/src/*"
       ]
     }
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/boilerplate-user/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/boilerplate-administrator/tsconfig.app.json"
+    }
+  ]
 }
