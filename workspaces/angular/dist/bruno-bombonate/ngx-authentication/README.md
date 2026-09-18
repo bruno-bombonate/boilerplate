@@ -1,64 +1,127 @@
-# NgxAuthentication
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.0.
+# @bruno-bombonate/ngx-authentication
 
-## Code scaffolding
+A package with AuthenticationService, that you can set, get and unset authentication in Angular apps.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Installation
 
 ```bash
-ng generate --help
+npm install @bruno-bombonate/ngx-authentication
 ```
 
-## Building
+### Compatibility table
 
-To build the library, run:
+|@bruno-bombonate/ngx-authentication|Angular|
+|-|-|
+|1.0.0|15.x|
+|2.0.0|16.x|
+|3.0.0|17.x|
+|18.0.0|18.x|
+|19.0.0|19.x|
+|20.0.0|20.x|
+|21.0.0|21.x|
+|22.0.0|22.x|
 
-```bash
-ng build ngx-authentication
+Works with any Angular 22 version (`^22.0.0`), not just the exact minor/patch used to build this package.
+
+## Usage
+
+`AuthenticationService` has four methods:
+
+- `setAuthentication<T>(authentication: T, rememberMe: boolean): void` — stores `authentication` as JSON, in `localStorage` when `rememberMe` is `true`, in `sessionStorage` otherwise (so it's cleared when the browser tab closes).
+- `getAuthentication<T>(): T | null` — reads back whatever was stored (checking `localStorage` first, then `sessionStorage`), parsed from JSON. Type it with the same shape you passed to `setAuthentication` (for example `getAuthentication<{ token: string }>()`). Returns `null` if nothing is stored, or when called on the server (SSR-safe: every method is a no-op outside the browser).
+- `isLoggedIn(): boolean` — `true` if there's anything stored in either `localStorage` or `sessionStorage`, without parsing it. Cheaper than `getAuthentication() !== null` when you only need a yes/no answer (e.g. inside a route guard).
+- `unsetAuthentication(): void` — removes the stored value from both `localStorage` and `sessionStorage`.
+
+### sign-in.component.ts
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AuthenticationService } from '@bruno-bombonate/ngx-authentication';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Component({
+  selector: 'app-sign-in',
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.sass']
+})
+export class SignInComponent {
+
+  private readonly httpClient = inject(HttpClient);
+  private readonly authenticationService = inject(AuthenticationService);
+
+  public readonly formLoading = signal<boolean>(false);
+
+  public handleFormSubmit(value: any): void {
+    if (this.formLoading() === false) {
+      this.formLoading.set(true);
+      this.httpClient.post('users/sign-in')
+        .subscribe({
+          next: (response: any) => {
+            this.authenticationService.setAuthentication(response.data, value.rememberMe);
+            this.formLoading.set(false);
+          },
+          error: (response: any) => {
+            this.formLoading.set(false);
+          }
+        });
+    }
+  }
+
+}
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+### my-account.component.ts
 
-### Publishing the Library
+```typescript
+import { Component } from '@angular/core';
+import { AuthenticationService } from '@bruno-bombonate/ngx-authentication';
 
-Once the project is built, you can publish your library by following these steps:
+@Component({
+  selector: 'app-my-account',
+  templateUrl: './my-account.component.html',
+  styleUrls: ['./my-account.component.sass']
+})
+export class MyAccountComponent {
 
-1. Navigate to the `dist` directory:
+  private readonly authenticationService = inject(AuthenticationService);
 
-   ```bash
-   cd dist/ngx-authentication
-   ```
+  public signOut(): void {
+    this.authenticationService.unsetAuthentication();
+  }
 
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+}
 ```
 
-## Running end-to-end tests
+### application.guard.ts
 
-For end-to-end (e2e) testing, run:
+```typescript
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { AuthenticationService } from '@bruno-bombonate/ngx-authentication';
 
-```bash
-ng e2e
+export const applicationGuard: CanActivateFn = () => {
+
+  const authenticationService = inject(AuthenticationService);
+  const router = inject(Router);
+
+  if (authenticationService.isLoggedIn() === true) {
+    return true;
+  }
+
+  return router.createUrlTree(['/sign-in']);
+
+};
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+`getAuthentication()` returns whatever object you originally passed to `setAuthentication` (for example `{ token: '...', user: { ... } }`), so you can read it wherever you need the stored token or user without making a network call:
 
-## Additional Resources
+```typescript
+interface Authentication {
+  token: string;
+}
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+const authentication = authenticationService.getAuthentication<Authentication>();
+const token = authentication?.token;
+```
