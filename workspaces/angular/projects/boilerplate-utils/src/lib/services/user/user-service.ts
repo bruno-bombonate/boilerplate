@@ -1,12 +1,10 @@
-import { Injectable, inject, InjectionToken, PLATFORM_ID } from '@angular/core';
+import { Service, inject, InjectionToken, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
 export const USER_TOKEN_STORAGE_KEY = new InjectionToken<string>('userTokenStorageKey');
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class UserService {
 
   private readonly platformId = inject(PLATFORM_ID);

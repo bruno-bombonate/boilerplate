@@ -1,0 +1,86 @@
+<form [formRoot]="form" (submit)="handleSubmit()">
+  <div class="mt-4">
+    <label
+      for="name"
+      class="form-label">
+      Name
+    </label>
+    <input
+      type="text"
+      id="name"
+      class="form-control"
+      [formField]="form.name">
+    <control-error
+      [control]="form.name">
+    </control-error>
+  </div>
+  <div class="mt-4">
+    <label
+      for="email"
+      class="form-label">
+      Email
+    </label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      autocomplete="username"
+      [formField]="form.email">
+    <control-error
+      [control]="form.email">
+    </control-error>
+  </div>
+  @if (form.password().disabled() === false) {
+    <div class="row">
+      <div class="col-lg mt-4">
+        <div>
+          <label
+            for="password"
+            class="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            autocomplete="new-password"
+            [formField]="form.password.password">
+          <control-error
+            [control]="form.password.password">
+          </control-error>
+        </div>
+      </div>
+      <div class="col-lg mt-4">
+        <div>
+          <label
+            for="passwordConfirmation"
+            class="form-label">
+            Password confirmation
+          </label>
+          <input
+            type="password"
+            id="passwordConfirmation"
+            class="form-control"
+            autocomplete="new-password"
+            [formField]="form.password.passwordConfirmation">
+          <control-error
+            [control]="form.password.passwordConfirmation">
+          </control-error>
+          @if (hasPasswordConfirmationError()) {
+            <div class="control-error">
+              Password and password confirmation do not match.
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+  <div class="text-center mt-4">
+    <button
+      type="submit"
+      class="button"
+      [disabled]="formLoading() === true">
+      Sign up
+    </button>
+  </div>
+</form>

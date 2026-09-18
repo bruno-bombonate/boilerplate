@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,6 @@ import { ActivatedRoute } from '@angular/router';
   imports: [],
   templateUrl: './dashboard-container.html',
   styleUrl: './dashboard-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardContainer {
 

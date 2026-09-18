@@ -12,10 +12,10 @@
     </a>
   </div>
 </div>
-<app-administrator-search-form
+<app-administrator-search-signal-form
   [formData]="listSearchParams()"
   (formChange)="handleListSearchFormChange($event)">
-</app-administrator-search-form>
+</app-administrator-search-signal-form>
 <div class="card mt-4">
   @if (listLoading() === true) {
     <p class="fw-light text-center">

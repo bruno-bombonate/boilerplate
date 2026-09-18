@@ -11,7 +11,6 @@
       "@bruno-bombonate/ngx-toast": ["./dist/bruno-bombonate/ngx-toast"],
       "@app/boilerplate-utils": ["./dist/boilerplate-utils"]
     },
-    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -26,8 +25,7 @@
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictInputAccessModifiers": true
   },
   "files": [],
   "references": [

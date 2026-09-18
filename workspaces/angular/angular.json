@@ -35,10 +35,6 @@
               "node_modules/bootstrap/dist/css/bootstrap-utilities.min.css",
               "projects/boilerplate-user/src/styles.sass"
             ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/boilerplate-utils/styles"]
-            },
-            "allowedCommonJsDependencies": ["lodash"],
             "server": "projects/boilerplate-user/src/main.server.ts",
             "outputMode": "server",
             "security": {
@@ -46,10 +42,30 @@
             },
             "ssr": {
               "entry": "projects/boilerplate-user/src/server.ts"
-            }
+            },
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/boilerplate-utils/styles"
+              ]
+            },
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ]
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "700kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {
@@ -126,10 +142,6 @@
               "node_modules/bootstrap/dist/css/bootstrap-utilities.min.css",
               "projects/boilerplate-administrator/src/styles.sass"
             ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/boilerplate-utils/styles"]
-            },
-            "allowedCommonJsDependencies": ["lodash"],
             "server": "projects/boilerplate-administrator/src/main.server.ts",
             "outputMode": "server",
             "security": {
@@ -137,10 +149,30 @@
             },
             "ssr": {
               "entry": "projects/boilerplate-administrator/src/server.ts"
-            }
+            },
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/boilerplate-utils/styles"
+              ]
+            },
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ]
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "700kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {

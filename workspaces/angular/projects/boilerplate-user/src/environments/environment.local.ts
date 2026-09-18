@@ -2,5 +2,7 @@ import { environment as environmentDev } from './environment.development';
 
 export const environment = {
   ...environmentDev,
-  baseUrl: 'http://localhost:5021',
+  api: {
+    url: 'http://localhost:5021'
+  },
 };

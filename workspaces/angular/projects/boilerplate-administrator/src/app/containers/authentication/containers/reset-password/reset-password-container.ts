@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { ResetPasswordRequestFormComponent, ResetPasswordFormComponent, HttpService } from '@app/boilerplate-utils';
+import { Component, inject, signal } from '@angular/core';
+import { ResetPasswordRequestSignalFormComponent, ResetPasswordSignalFormComponent, HttpService } from '@app/boilerplate-utils';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
@@ -10,14 +10,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-reset-password-container',
   imports: [
     // components
-    ResetPasswordRequestFormComponent,
-    ResetPasswordFormComponent,
+    ResetPasswordRequestSignalFormComponent,
+    ResetPasswordSignalFormComponent,
     // directives
     RouterLink,
   ],
   templateUrl: './reset-password-container.html',
   styleUrl: './reset-password-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResetPasswordContainer extends DestroyRefClass {
 

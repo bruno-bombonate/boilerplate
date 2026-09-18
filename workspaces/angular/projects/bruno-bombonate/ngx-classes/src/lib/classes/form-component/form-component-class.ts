@@ -32,13 +32,15 @@ export class FormComponentClass extends DestroyRefClass implements OnChanges, On
 
     form.valueChanges
       .pipe(
-        takeUntilDestroyed(this.destroyRef),
         distinctUntilChanged(),
-        debounceTime(500)
+        debounceTime(500),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        const valueMapped = this.mapOutputValue(form.value);
-        this.formChange.emit(valueMapped);
+        if (this.destroyRef.destroyed === false) {
+          const valueMapped = this.mapOutputValue(form.value);
+          this.formChange.emit(valueMapped);
+        }
       });
 
   }

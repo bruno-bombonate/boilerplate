@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { SignUpFormComponent } from './components/sign-up-form/sign-up-form-component';
+import { Component, inject, signal } from '@angular/core';
+import { SignUpSignalFormComponent } from './components/sign-up-signal-form/sign-up-signal-form-component';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
 import { HttpService } from '@app/boilerplate-utils';
@@ -11,13 +11,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-sign-up-container',
   imports: [
     // components
-    SignUpFormComponent,
+    SignUpSignalFormComponent,
     // directives
     RouterLink,
   ],
   templateUrl: './sign-up-container.html',
   styleUrl: './sign-up-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignUpContainer extends DestroyRefClass {
 

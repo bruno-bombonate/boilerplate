@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { StatusPipe } from '@app/boilerplate-utils';
 import { ListComponentClass } from '@bruno-bombonate/ngx-classes';
@@ -13,6 +13,5 @@ import { ListComponentClass } from '@bruno-bombonate/ngx-classes';
   ],
   templateUrl: './user-list-component.html',
   styleUrl: './user-list-component.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserListComponent extends ListComponentClass {}

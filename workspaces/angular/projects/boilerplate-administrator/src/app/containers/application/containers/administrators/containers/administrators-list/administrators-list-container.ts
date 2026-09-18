@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { AdministratorSearchFormComponent } from '../../components/administrator-search-form/administrator-search-form-component';
+import { Component, inject } from '@angular/core';
+import { AdministratorSearchSignalFormComponent } from '../../components/administrator-search-signal-form/administrator-search-signal-form-component';
 import { AdministratorListComponent } from '../../components/administrator-list/administrator-list-component';
 import { RouterLink } from '@angular/router';
 import { HttpService } from '@app/boilerplate-utils';
@@ -11,14 +11,13 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-administrators-list-container',
   imports: [
     // components
-    AdministratorSearchFormComponent,
+    AdministratorSearchSignalFormComponent,
     AdministratorListComponent,
     // directives
     RouterLink,
   ],
   templateUrl: './administrators-list-container.html',
   styleUrl: './administrators-list-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdministratorsListContainer extends ListContainerClass {
 

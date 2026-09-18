@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'control-tip',
   imports: [],
-  templateUrl: './control-tip-component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './control-tip-component.html'
 })
 export class ControlTipComponent { }

@@ -1,0 +1,69 @@
+<form [formRoot]="form" (submit)="handleSubmit()">
+  <div class="row">
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="userId"
+          class="form-label">
+          ID
+        </label>
+        <input
+          type="tel"
+          id="userId"
+          class="form-control"
+          [formField]="form.userId">
+      </div>
+    </div>
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="userName"
+          class="form-label">
+          Name
+        </label>
+        <input
+          type="text"
+          id="userName"
+          class="form-control"
+          [formField]="form.userName">
+      </div>
+    </div>
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="userEmail"
+          class="form-label">
+          Email
+        </label>
+        <input
+          type="text"
+          id="userEmail"
+          class="form-control"
+          [formField]="form.userEmail">
+      </div>
+    </div>
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="userStatus"
+          class="form-label">
+          Status
+        </label>
+        <select
+          id="userStatus"
+          class="form-control"
+          [formField]="form.userStatus">
+          <option value="">
+            All
+          </option>
+          <option value="true">
+            Active
+          </option>
+          <option value="false">
+            Inactive
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</form>

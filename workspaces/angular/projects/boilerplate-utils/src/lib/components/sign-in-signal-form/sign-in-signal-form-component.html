@@ -1,0 +1,42 @@
+<form [formRoot]="form" (submit)="handleSubmit()">
+  <div class="mt-4">
+    <label
+      for="email"
+      class="form-label">
+      Email
+    </label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      autocomplete="username"
+      [formField]="form.email">
+    <control-error
+      [control]="form.email">
+    </control-error>
+  </div>
+  <div class="mt-4">
+    <label
+      for="password"
+      class="form-label">
+      Password
+    </label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      autocomplete="current-password"
+      [formField]="form.password">
+    <control-error
+      [control]="form.password">
+    </control-error>
+  </div>
+  <div class="text-center mt-4">
+    <button
+      type="submit"
+      class="button"
+      [disabled]="formLoading() === true">
+      Sign in
+    </button>
+  </div>
+</form>

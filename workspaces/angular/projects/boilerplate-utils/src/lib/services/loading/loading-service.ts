@@ -1,8 +1,6 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Service, signal, computed } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Service()
 export class LoadingService {
 
   private readonly loadingRequestCount = signal<number>(0);

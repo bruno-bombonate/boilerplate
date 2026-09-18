@@ -1,74 +1,64 @@
+# BoilerplateUtils
 
-# @app/boilerplate-utils
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.0.
 
-Internal, unpublished library shared between `boilerplate-user` and `boilerplate-administrator`. Not published to npm — replaces the old `utils/` folder that was shared between apps via relative imports.
+## Code scaffolding
 
-## Contents
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-- `UserService` — reactive user/token state. Requires each app to provide `USER_TOKEN_STORAGE_KEY` (an `InjectionToken<string>`) with an app-specific value, so the two apps never share the same `localStorage` key.
-- `HttpService` — thin wrapper around `HttpClient` with caching and a `Loading-Interceptor-Skip` header (set automatically when a call passes `{ loading: false }`). Requires each app to provide `API_BASE_URL` (an `InjectionToken<string>`) with its own API URL.
-- `LoadingService` — tracks how many HTTP requests are in flight (`addLoadingRequest()`/`removeLoadingRequest()`), exposing a `loading: Signal<boolean>` for a global loading indicator.
-- `jwtInterceptor` — adds the `Authorization: Bearer <token>` header when there's a token.
-- `createErrorInterceptor(authRoute)` — on `401`, signs the user out and navigates to `authRoute`. Always rethrows the **raw** `HttpErrorResponse` (no unwrapping) — read the API's error body at the call site as `response.error.message`, not `response.message`.
-- `loadingInterceptor` — increments/decrements `LoadingService` around every request, skipped for a given call when `HttpService` sets the `Loading-Interceptor-Skip` header (i.e. `{ loading: false }`).
-- `createApplicationContainerGuard(meEndpoint, signInRoute)` — route guard factory for the authenticated area. Parametrized because the two apps hit different "who am I" endpoints (`users/me` vs `administrators/me`) and have their own sign-in route.
-- `StatusPipe` — `boolean` to `Active`/`Inactive`/`-` label.
-- `passwordConfirmation` — reactive forms cross-field validator.
-- `NavClass` — base directive for GSAP-animated nav menus.
-- `SignInFormComponent`, `ResetPasswordFormComponent`, `ResetPasswordRequestFormComponent`, `PasswordFormComponent`, `ProfileViewComponent` — shared authentication/profile form and view components.
-
-## Usage
-
-### app.config.ts
-
-```typescript
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-import { jwtInterceptor, createErrorInterceptor, loadingInterceptor, USER_TOKEN_STORAGE_KEY, API_BASE_URL } from '@app/boilerplate-utils';
-import { environment } from '../environments/environment';
-
-export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(
-      withFetch(),
-      withInterceptors([
-        jwtInterceptor,
-        createErrorInterceptor(['/', 'auth', 'sign-in']),
-        loadingInterceptor,
-      ]),
-    ),
-    { provide: USER_TOKEN_STORAGE_KEY, useValue: 'boilerplate-user-token' },
-    { provide: API_BASE_URL, useValue: environment.baseUrl },
-    // ...
-  ]
-};
+```bash
+ng generate component component-name
 ```
 
-### Reading the global loading state
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-```typescript
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
-import { LoadingService } from '@app/boilerplate-utils';
-
-@Component({
-  selector: 'app-root',
-  // ...
-  changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class App {
-  protected readonly loadingService = inject(LoadingService);
-}
+```bash
+ng generate --help
 ```
 
-```html
-@if (loadingService.loading() === true) {
-  <div class="loading-bar"></div>
-}
+## Building
+
+To build the library, run:
+
+```bash
+ng build boilerplate-utils
 ```
 
-### application-container.routes.ts
+This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
 
-```typescript
-import { createApplicationContainerGuard } from '@app/boilerplate-utils';
+### Publishing the Library
 
-export const applicationContainerGuard = createApplicationContainerGuard('users/me', ['/', 'authentication', 'sign-in']);
+Once the project is built, you can publish your library by following these steps:
+
+1. Navigate to the `dist` directory:
+
+   ```bash
+   cd dist/boilerplate-utils
+   ```
+
+2. Run the `npm publish` command to publish your library to the npm registry:
+   ```bash
+   npm publish
+   ```
+
+## Running unit tests
+
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+
+```bash
+ng test
 ```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

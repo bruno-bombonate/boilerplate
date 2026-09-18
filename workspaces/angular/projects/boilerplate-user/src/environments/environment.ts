@@ -1,5 +1,7 @@
 export const environment = {
-  baseUrl: 'https://user.api.boilerplate.com',
+  api: {
+    url: 'https://user.api.boilerplate.com'
+  },
   google: {
     analytics: {
       id: '',

@@ -8,6 +8,7 @@ export * from './lib/classes/list-container/list-container-class';
 export * from './lib/classes/list-component/list-component-class';
 export * from './lib/classes/view-component/view-component-class';
 export * from './lib/classes/form-component/form-component-class';
+export * from './lib/classes/signal-form-component/signal-form-component-class';
 
 // interfaces
 export * from './lib/interfaces/search-param-interface';

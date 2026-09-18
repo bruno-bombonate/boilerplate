@@ -1,10 +1,10 @@
 <h1>
   {{ activatedRoute.snapshot.title }}
 </h1>
-<app-user-search-form
+<app-user-search-signal-form
   [formData]="listSearchParams()"
   (formChange)="handleListSearchFormChange($event)">
-</app-user-search-form>
+</app-user-search-signal-form>
 <div class="card mt-4">
   @if (listLoading() === true) {
     <p class="fw-light text-center">

@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { UserSearchFormComponent } from '../../components/user-search-form/user-search-form-component';
+import { Component, inject } from '@angular/core';
+import { UserSearchSignalFormComponent } from '../../components/user-search-signal-form/user-search-signal-form-component';
 import { UserListComponent } from '../../components/user-list/user-list-component';
 import { ListContainerClass, SearchParamType, SearchParamValueType } from '@bruno-bombonate/ngx-classes';
 import { HttpService } from '@app/boilerplate-utils';
@@ -10,12 +10,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-users-list-container',
   imports: [
     // components
-    UserSearchFormComponent,
+    UserSearchSignalFormComponent,
     UserListComponent,
   ],
   templateUrl: './users-list-container.html',
   styleUrl: './users-list-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersListContainer extends ListContainerClass {
 

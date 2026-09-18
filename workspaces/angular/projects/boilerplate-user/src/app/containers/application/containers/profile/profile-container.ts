@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { ProfileViewComponent, PasswordFormComponent, HttpService, UserService } from '@app/boilerplate-utils';
+import { Component, inject, signal } from '@angular/core';
+import { ProfileViewComponent, PasswordSignalFormComponent, HttpService, UserService } from '@app/boilerplate-utils';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { ActivatedRoute } from '@angular/router';
@@ -12,11 +12,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [
     // components
     ProfileViewComponent,
-    PasswordFormComponent,
+    PasswordSignalFormComponent,
   ],
   templateUrl: './profile-container.html',
   styleUrl: './profile-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileContainer extends DestroyRefClass {
 

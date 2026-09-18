@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { UserViewComponent } from '../../components/user-view/user-view-component';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
 import { HttpService } from '@app/boilerplate-utils';
@@ -14,7 +14,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   ],
   templateUrl: './users-details-container.html',
   styleUrl: './users-details-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersDetailsContainer extends DestroyRefClass implements OnInit {
 

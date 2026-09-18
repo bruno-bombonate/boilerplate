@@ -1,182 +1,64 @@
+# NgxToast
 
-# @bruno-bombonate/ngx-toast
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.1.0.
 
-A package with ToastComponent and ToastService, that you can show success, error, warning and info messages.
+## Code scaffolding
 
-## Installation
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
 ```bash
-npm install @bruno-bombonate/ngx-toast
+ng generate component component-name
 ```
 
-### Compatibility table
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-|@bruno-bombonate/ngx-toast|Angular|
-|-|-|
-|1.0.0|15.x|
-|2.0.0|16.x|
-|3.0.0|17.x|
-|18.0.0|18.x|
-|19.0.0|19.x|
-|20.0.1|20.x|
-|21.0.0|21.x|
-
-Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
-
-## Usage
-
-### app.component.html
-
-```html
-<button
-  type="button"
-  (click)="toastSuccess()">
-  Sucess
-</button>
-<button
-  type="button"
-  (click)="toastError()">
-  Error
-</button>
-<button
-  type="button"
-  (click)="toastWarning()">
-  Warning
-</button>
-<button
-  type="button"
-  (click)="toastInfo()">
-  Info
-</button>
-<toast>
-</toast>
+```bash
+ng generate --help
 ```
 
-### app.component.ts
+## Building
 
-```typescript
-import { Component, inject } from '@angular/core';
-import { ToastComponent, ToastService } from '@bruno-bombonate/ngx-toast';
+To build the library, run:
 
-@Component({
-  selector: 'app-root',
-  imports: [
-    // components
-    ToastComponent
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
-})
-export class AppComponent {
-
-  private readonly toastService = inject(ToastService);
-
-  public toastSuccess(): void {
-    this.toastService.success('The success message.');
-  }
-
-  public toastError(): void {
-    this.toastService.error('The error message.');
-  }
-
-  public toastWarning(): void {
-    this.toastService.warning('The warning message.');
-  }
-
-  public toastInfo(): void {
-    this.toastService.info('The info message.');
-  }
-
-}
+```bash
+ng build ngx-toast
 ```
 
-### styles.scss
+This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
 
-```scss
-$toast-min-width: 320px;
-$toast-background-color: #000000;
-$toast-color: #FFFFFF;
+### Publishing the Library
 
-$toast-success-background-color: #28A745;
-$toast-success-color: #FFFFFF;
+Once the project is built, you can publish your library by following these steps:
 
-$toast-error-background-color: #DC3545;
-$toast-error-color: #FFFFFF;
+1. Navigate to the `dist` directory:
 
-$toast-warning-background-color: #FFC107;
-$toast-warning-color: #000000;
+   ```bash
+   cd dist/ngx-toast
+   ```
 
-$toast-info-background-color: #17A2B8;
-$toast-info-color: #FFFFFF;
+2. Run the `npm publish` command to publish your library to the npm registry:
+   ```bash
+   npm publish
+   ```
 
-toast {
-  position: fixed;
-  z-index: 1;
-  bottom: 0px;
-  left: 0px;
-  display: block;
-  min-width: $toast-min-width;
-  width: 100%;
-  text-align: center;
-  padding: 0px 32px 32px 32px;
-  transform: translate(0px, 100%);
-}
+## Running unit tests
 
-.toast {
-  display: inline-flex;
-  align-items: center;
-  background-color: $toast-background-color;
-  line-height: 1;
-  text-align: left;
-  color: $toast-color;
-  padding: 16px;
-  border-radius: 4px;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10);
-}
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
-.toast-success {
-  background-color: $toast-success-background-color;
-  color: $toast-success-color;
-}
-
-.toast-error {
-  background-color: $toast-error-background-color;
-  color: $toast-error-color;
-}
-
-.toast-warning {
-  background-color: $toast-warning-background-color;
-  color: $toast-warning-color;
-}
-
-.toast-info {
-  background-color: $toast-info-background-color;
-  color: $toast-info-color;
-}
+```bash
+ng test
 ```
 
-### Building your own toast UI
+## Running end-to-end tests
 
-You don't have to use `ToastComponent`. `ToastService` also exposes `send$: Observable<Toast>`, emitting every time `success`/`error`/`warning`/`info` is called — subscribe to it to drive your own toast/snackbar UI instead:
+For end-to-end (e2e) testing, run:
 
-```typescript
-import { Component, inject } from '@angular/core';
-import { ToastService, Toast, ToastType } from '@bruno-bombonate/ngx-toast';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-
-@Component({ /* ... */ })
-export class MyOwnToastComponent {
-
-  private readonly toastService = inject(ToastService);
-
-  constructor() {
-    this.toastService.send$
-      .pipe(takeUntilDestroyed())
-      .subscribe((toast: Toast) => {
-        // toast.type is a ToastType ('success' | 'error' | 'warning' | 'info')
-        // toast.message is the string you passed to the service
-      });
-  }
-
-}
+```bash
+ng e2e
 ```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

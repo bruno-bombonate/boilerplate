@@ -1,8 +1,9 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor, createErrorInterceptor, loadingInterceptor, USER_TOKEN_STORAGE_KEY, API_BASE_URL } from '@app/boilerplate-utils';
+import { provideNgxForms } from '@bruno-bombonate/ngx-forms';
 
 import { routes } from './app.routes';
 import { authenticationContainerRoutes } from './containers/authentication/authentication-routes';
@@ -19,7 +20,6 @@ export const appConfig: ApplicationConfig = {
     ),
     provideClientHydration(withEventReplay()),
     provideHttpClient(
-      withFetch(),
       withInterceptors([
         jwtInterceptor,
         createErrorInterceptor(['/', authenticationContainerRoutes.path as string, signInContainerRoutes.path as string]),
@@ -27,6 +27,7 @@ export const appConfig: ApplicationConfig = {
       ]),
     ),
     { provide: USER_TOKEN_STORAGE_KEY, useValue: 'boilerplate-user-token' },
-    { provide: API_BASE_URL, useValue: environment.baseUrl },
+    { provide: API_BASE_URL, useValue: environment.api.url },
+    provideNgxForms(),
   ],
 };

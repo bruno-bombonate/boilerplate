@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
-import { SignInFormComponent, HttpService, UserService } from '@app/boilerplate-utils';
+import { SignInSignalFormComponent, HttpService, UserService } from '@app/boilerplate-utils';
 import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
 import { resetPasswordContainerRoutes } from '../reset-password/reset-password-routes';
@@ -10,13 +10,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-sign-in-container',
   imports: [
     // components
-    SignInFormComponent,
+    SignInSignalFormComponent,
     // directives
     RouterLink,
   ],
   templateUrl: './sign-in-container.html',
   styleUrl: './sign-in-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInContainer extends DestroyRefClass {
 

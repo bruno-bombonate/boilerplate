@@ -18,9 +18,6 @@ export * from './lib/guards/application-container/application-container-guard';
 // pipes
 export * from './lib/pipes/status/status-pipe';
 
-// validators
-export * from './lib/validators/password-confirmation/password-confirmation-validator';
-
 // classes
 export * from './lib/classes/nav/nav-class';
 
@@ -28,8 +25,8 @@ export * from './lib/classes/nav/nav-class';
 export * from './lib/injection-tokens/api-base-url-injection-token';
 
 // components
-export * from './lib/components/sign-in-form/sign-in-form-component';
-export * from './lib/components/reset-password-form/reset-password-form-component';
-export * from './lib/components/reset-password-request-form/reset-password-request-form-component';
-export * from './lib/components/password-form/password-form-component';
 export * from './lib/components/profile-view/profile-view-component';
+export * from './lib/components/sign-in-signal-form/sign-in-signal-form-component';
+export * from './lib/components/reset-password-signal-form/reset-password-signal-form-component';
+export * from './lib/components/reset-password-request-signal-form/reset-password-request-signal-form-component';
+export * from './lib/components/password-signal-form/password-signal-form-component';

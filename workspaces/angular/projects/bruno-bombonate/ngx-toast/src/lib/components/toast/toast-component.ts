@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, AfterViewInit, inject, ElementRef, DestroyRef, signal } from '@angular/core';
+import { Component, AfterViewInit, inject, ElementRef, DestroyRef, signal } from '@angular/core';
 import { ToastService } from '../../services/toast/toast-service';
 import { Toast } from '../../interfaces/toast-interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -7,8 +7,7 @@ import gsap from 'gsap';
 @Component({
   selector: 'toast',
   imports: [],
-  templateUrl: './toast-component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './toast-component.html'
 })
 export class ToastComponent implements AfterViewInit {
 

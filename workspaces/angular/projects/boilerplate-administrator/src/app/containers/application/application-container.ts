@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { NavClass, UserService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
@@ -16,7 +16,6 @@ import { signInContainerRoutes } from '../authentication/containers/sign-in/sign
   ],
   templateUrl: './application-container.html',
   styleUrl: './application-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApplicationContainer extends NavClass {
 

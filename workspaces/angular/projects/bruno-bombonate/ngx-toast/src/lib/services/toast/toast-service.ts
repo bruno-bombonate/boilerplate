@@ -1,10 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { Toast, ToastType } from '../../interfaces/toast-interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class ToastService {
 
   private readonly _send: Subject<Toast> = new Subject();

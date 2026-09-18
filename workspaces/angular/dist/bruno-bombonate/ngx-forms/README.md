@@ -1,7 +1,7 @@
 
 # @bruno-bombonate/ngx-forms
 
-A package containing `ControlTipComponent` and `ControlErrorComponent`, with `FormsService`/`provideNgxForms` to customize error messages and error-visibility rules app-wide.
+A package containing `ControlTipComponent` and `ControlErrorComponent`, with `FormsService`/`provideNgxForms` to customize error messages and error-visibility rules app-wide. `ControlErrorComponent` works with both Reactive Forms (`AbstractControl`) and Signal Forms (`FieldTree`, `@angular/forms/signals`) — pass either one to the same `[control]` input.
 
 ## Installation
 
@@ -20,8 +20,30 @@ npm install @bruno-bombonate/ngx-forms
 |19.0.0|19.x|
 |20.0.0|20.x|
 |21.0.0|21.x|
+|22.0.0|22.x|
 
-Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
+Works with any Angular 22 version (`^22.0.0`), not just the exact minor/patch used to build this package.
+
+## Setup
+
+Call `provideNgxForms()` in your `app.config.ts`, even with no arguments — besides letting you [customize error messages](#overriding-or-adding-custom-errors-or-the-error-visibility-rule), it registers the `ng-valid`/`ng-invalid`/`ng-touched`/`ng-untouched`/`ng-dirty`/`ng-pristine` CSS classes for Signal Forms fields. Reactive Forms adds these classes on its own; Signal Forms doesn't unless you opt in, and `SignalFormComponentClass` (from `@bruno-bombonate/ngx-classes`) relies on `.ng-invalid` to scroll to the first invalid field on submit.
+
+```typescript
+import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideNgxForms } from '@bruno-bombonate/ngx-forms';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+    provideClientHydration(withEventReplay()),
+    provideNgxForms()
+  ]
+};
+```
 
 ## Usage
 
@@ -73,7 +95,7 @@ Using ControlTipComponent only.
 </form>
 ```
 
-Using ControlErrorComponent only. `ControlErrorComponent` receives the whole `AbstractControl` (not just its `errors`) and decides on its own whether the message should be visible — by default, when the control has errors and is `touched` or `dirty`.
+Using ControlErrorComponent only. `ControlErrorComponent` receives the whole control (not just its errors) and decides on its own whether the message should be visible — by default, when the control has errors and is touched or dirty. Pass it a Reactive Forms `AbstractControl`:
 
 ```html
 <form [formGroup]="form" (ngSubmit)="handleNgSubmit()">
@@ -97,7 +119,32 @@ Using ControlErrorComponent only. `ControlErrorComponent` receives the whole `Ab
 </form>
 ```
 
-Using both ControlTipComponent and ControlErrorComponent. If you need the same visibility rule elsewhere in your template (for example, to hide a `ControlTipComponent` while an error is shown), inject `FormsService` and call `controlErrorVisible(control)` — it's the same predicate `ControlErrorComponent` uses internally (the default one, or the one you provided via `provideNgxForms`, see below).
+...or a Signal Forms field — same `[control]` input, `ControlErrorComponent` detects which kind it got at runtime:
+
+```html
+<form [formRoot]="form" (submit)="handleSubmit()">
+  <div>
+    <label
+      for="name">
+      Name
+    </label>
+    <input
+      id="name"
+      [formField]="form.name">
+    <control-error
+      [control]="form.name">
+    </control-error>
+  </div>
+  <button
+    type="submit">
+    Submit
+  </button>
+</form>
+```
+
+`[formRoot]` and `[formField]` are the directives Signal Forms itself provides — import `FormRoot`/`FormField` from `@angular/forms/signals` into your component's `imports` array alongside `ControlErrorComponent`.
+
+Using both ControlTipComponent and ControlErrorComponent. If you need the same visibility rule elsewhere in your template (for example, to hide a `ControlTipComponent` while an error is shown), inject `FormsService` and call `controlErrorVisible(control)` for a Reactive control or `fieldErrorVisible(field())` for a Signal Forms field — these are the same predicates `ControlErrorComponent` uses internally (the default ones, or the ones you provided via `provideNgxForms`, see below).
 
 ```typescript
 import { Component, inject } from '@angular/core';
@@ -142,9 +189,14 @@ export class UserFormComponent {
 
 ### Overriding or adding custom errors, or the error visibility rule.
 
-Out of the box, `ControlErrorComponent` already has a message for every one of Angular's built-in validators: `required`, `requiredTrue`, `email`, `pattern`, `min`, `max`, `minlength`, `maxlength`. You only need `provideNgxForms` if you want to change one of those messages, translate them, or add a message for your own custom validator's error key (like `custom` below) — `controlErrors` is **merged** into the built-in defaults, not a replacement for them, so you only need to list the keys you're adding or overriding, not the full set.
+Out of the box, `ControlErrorComponent` already has a message for every one of Angular's built-in validators, for both forms:
 
-`provideNgxForms` takes an options object — both `controlErrors` and `controlErrorVisible` are optional, so you can pass either one, both, or neither.
+- **Reactive Forms**: `required`, `requiredTrue`, `email`, `pattern`, `min`, `max`, `minlength`, `maxlength`.
+- **Signal Forms**: `required`, `email`, `pattern`, `min`, `max`, `minLength`, `maxLength` (note the casing — Signal Forms' own validators use `minLength`/`maxLength`, not `minlength`/`maxlength`, and there's no separate `requiredTrue` kind).
+
+You only need `provideNgxForms` if you want to change one of those messages, translate them, or add a message for your own custom validator's error key (like `custom` below) — `controlErrors`/`fieldErrors` are **merged** into their respective built-in defaults, not a replacement for them, so you only need to list the keys you're adding or overriding, not the full set.
+
+`provideNgxForms` takes an optional options object — `controlErrors`, `controlErrorVisible`, `fieldErrors` and `fieldErrorVisible` are all optional, so you can pass any combination, or call it with no arguments at all (see [Setup](#setup) above).
 
 #### app.config.ts
 
@@ -153,7 +205,7 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideNgxForms, ControlErrors, ControlErrorVisible } from '@bruno-bombonate/ngx-forms';
+import { provideNgxForms, ControlErrors, ControlErrorVisible, FieldErrors, FieldErrorVisible } from '@bruno-bombonate/ngx-forms';
 
 export const controlErrors: ControlErrors = {
   // overriding a built-in message
@@ -163,17 +215,25 @@ export const controlErrors: ControlErrors = {
 };
 
 // Default rule is: control.errors !== null && (control.touched || control.dirty).
-// Override it here to change when every <control-error> in this app shows its message.
+// Override it here to change when every <control-error> bound to a Reactive control shows its message.
 export const controlErrorVisible: ControlErrorVisible = (control) => control.errors !== null;
+
+export const fieldErrors: FieldErrors = {
+  required: () => 'Please fill this field.'
+};
+
+// Default rule is: field.errors().length > 0 && (field.touched() || field.dirty()).
+// Override it here to change when every <control-error> bound to a Signal Forms field shows its message.
+export const fieldErrorVisible: FieldErrorVisible = (field) => field.errors().length > 0;
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
-    provideNgxForms({ controlErrors, controlErrorVisible })
+    provideNgxForms({ controlErrors, controlErrorVisible, fieldErrors, fieldErrorVisible })
   ]
 };
 ```
 
-If a control has an error whose key isn't in the built-in list and wasn't added through `controlErrors`, `ControlErrorComponent` throws — that's on purpose, so a forgotten custom-validator message fails loudly in development instead of silently showing nothing.
+If a control (or field) has an error whose key isn't in the built-in list and wasn't added through `controlErrors`/`fieldErrors`, `ControlErrorComponent` throws — that's on purpose, so a forgotten custom-validator message fails loudly in development instead of silently showing nothing.

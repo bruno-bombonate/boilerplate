@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Service, inject } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { cloneDeep } from 'lodash';
@@ -22,9 +22,7 @@ interface PostRequestOptions extends RequestOptions {
   cache?: boolean;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Service()
 export class HttpService {
 
   private readonly httpClient = inject(HttpClient);

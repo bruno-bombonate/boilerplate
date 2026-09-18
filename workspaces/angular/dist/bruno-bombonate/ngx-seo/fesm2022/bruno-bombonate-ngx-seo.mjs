@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { inject, Injectable } from '@angular/core';
+import { inject, Service } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -42,14 +42,11 @@ class SeoService {
         this.appName = appName;
         this.listenForRouteChanges();
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: SeoService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: SeoService, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "22.1.7", ngImport: i0, type: SeoService, deps: [], target: i0.ɵɵFactoryTarget.Service });
+    static ɵprov = i0.ɵɵngDeclareService({ minVersion: "22.0.0", version: "22.1.7", ngImport: i0, type: SeoService });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: SeoService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root'
-                }]
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "22.1.7", ngImport: i0, type: SeoService, decorators: [{
+            type: Service
         }] });
 
 /*

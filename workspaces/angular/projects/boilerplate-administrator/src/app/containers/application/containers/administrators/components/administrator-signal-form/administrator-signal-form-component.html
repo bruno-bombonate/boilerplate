@@ -1,0 +1,122 @@
+<form [formRoot]="form" (submit)="handleSubmit()">
+  @if (formData() !== undefined) {
+    <div class="row">
+      <div class="col-lg-6">
+        <p class="view-label">
+          ID
+          <span>
+            {{ formData().id }}
+          </span>
+        </p>
+      </div>
+      <div class="col-lg-6 mt-4 mt-lg-0">
+        <p class="view-label">
+          Registration date
+          <span>
+            {{ formData().createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}
+          </span>
+        </p>
+      </div>
+    </div>
+  }
+  <div [class.mt-4]="formData() !== undefined">
+    <label
+      for="name"
+      class="form-label">
+      Name
+    </label>
+    <input
+      type="text"
+      id="name"
+      class="form-control"
+      [formField]="form.name">
+    <control-error
+      [control]="form.name">
+    </control-error>
+  </div>
+  <div class="mt-4">
+    <label
+      for="email"
+      class="form-label">
+      Email
+    </label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      [formField]="form.email">
+    <control-error
+      [control]="form.email">
+    </control-error>
+  </div>
+  @if (form.password().disabled() === false) {
+    <div class="row">
+      <div class="col-lg mt-4">
+        <div>
+          <label
+            for="password"
+            class="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            class="form-control"
+            [formField]="form.password.password">
+          <control-error
+            [control]="form.password.password">
+          </control-error>
+        </div>
+      </div>
+      <div class="col-lg mt-4">
+        <div>
+          <label
+            for="passwordConfirmation"
+            class="form-label">
+            Password confirmation
+          </label>
+          <input
+            type="password"
+            id="passwordConfirmation"
+            class="form-control"
+            [formField]="form.password.passwordConfirmation">
+          <control-error
+            [control]="form.password.passwordConfirmation">
+          </control-error>
+          @if (hasPasswordConfirmationError()) {
+            <div class="control-error">
+              Password and password confirmation do not match.
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+  <div class="mt-4">
+    <label
+      for="status"
+      class="form-label">
+      Status
+    </label>
+    <select
+      id="status"
+      class="form-control"
+      [formField]="form.status">
+      <option value="">Select an option</option>
+      <option value="true">Active</option>
+      <option value="false">Inactive</option>
+    </select>
+    <control-error
+      [control]="form.status">
+    </control-error>
+  </div>
+  <button
+    type="submit"
+    class="button mt-4">
+    @if (formData() === undefined) {
+      Add
+    } @else {
+      Edit
+    }
+  </button>
+</form>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -9,6 +9,5 @@ import { RouterOutlet } from '@angular/router';
   ],
   templateUrl: './authentication-container.html',
   styleUrl: './authentication-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthenticationContainer {}

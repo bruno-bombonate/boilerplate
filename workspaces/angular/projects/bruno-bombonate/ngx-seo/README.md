@@ -20,8 +20,9 @@ npm install @bruno-bombonate/ngx-seo
 |19.0.0|19.x|
 |20.0.0|20.x|
 |21.0.0|21.x|
+|22.0.0|22.x|
 
-Works with any Angular 21 version (`^21.0.0`), not just the exact minor/patch used to build this package.
+Works with any Angular 22 version (`^22.0.0`), not just the exact minor/patch used to build this package.
 
 ## Usage
 

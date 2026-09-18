@@ -1,0 +1,69 @@
+<form [formRoot]="form" (submit)="handleSubmit()">
+  <div class="row">
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="administratorId"
+          class="form-label">
+          ID
+        </label>
+        <input
+          type="tel"
+          id="administratorId"
+          class="form-control"
+          [formField]="form.administratorId">
+      </div>
+    </div>
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="administratorName"
+          class="form-label">
+          Name
+        </label>
+        <input
+          type="text"
+          id="administratorName"
+          class="form-control"
+          [formField]="form.administratorName">
+      </div>
+    </div>
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="administratorEmail"
+          class="form-label">
+          Email
+        </label>
+        <input
+          type="text"
+          id="administratorEmail"
+          class="form-control"
+          [formField]="form.administratorEmail">
+      </div>
+    </div>
+    <div class="col-6 col-lg mt-4">
+      <div>
+        <label
+          for="administratorStatus"
+          class="form-label">
+          Status
+        </label>
+        <select
+          id="administratorStatus"
+          class="form-control"
+          [formField]="form.administratorStatus">
+          <option value="">
+            All
+          </option>
+          <option value="true">
+            Active
+          </option>
+          <option value="false">
+            Inactive
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</form>

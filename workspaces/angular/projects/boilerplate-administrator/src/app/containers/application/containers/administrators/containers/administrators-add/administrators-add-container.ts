@@ -1,5 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
-import { AdministratorFormComponent } from '../../components/administrator-form/administrator-form-component';
+import { Component, inject, signal } from '@angular/core';
+import { AdministratorSignalFormComponent } from '../../components/administrator-signal-form/administrator-signal-form-component';
 import { DestroyRefClass } from '@bruno-bombonate/ngx-classes';
 import { HttpService } from '@app/boilerplate-utils';
 import { ToastService } from '@bruno-bombonate/ngx-toast';
@@ -10,11 +10,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-administrators-add-container',
   imports: [
     // components
-    AdministratorFormComponent,
+    AdministratorSignalFormComponent,
   ],
   templateUrl: './administrators-add-container.html',
   styleUrl: './administrators-add-container.sass',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdministratorsAddContainer extends DestroyRefClass {
 

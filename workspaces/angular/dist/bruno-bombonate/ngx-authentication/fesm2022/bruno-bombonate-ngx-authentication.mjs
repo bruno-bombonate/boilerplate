@@ -1,5 +1,5 @@
 import * as i0 from '@angular/core';
-import { inject, PLATFORM_ID, Injectable } from '@angular/core';
+import { inject, PLATFORM_ID, Service } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 class AuthenticationService {
@@ -41,14 +41,11 @@ class AuthenticationService {
         }
         return isLoggedIn;
     }
-    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: AuthenticationService, deps: [], target: i0.ɵɵFactoryTarget.Injectable });
-    static ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: AuthenticationService, providedIn: 'root' });
+    static ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "22.1.7", ngImport: i0, type: AuthenticationService, deps: [], target: i0.ɵɵFactoryTarget.Service });
+    static ɵprov = i0.ɵɵngDeclareService({ minVersion: "22.0.0", version: "22.1.7", ngImport: i0, type: AuthenticationService });
 }
-i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "21.2.23", ngImport: i0, type: AuthenticationService, decorators: [{
-            type: Injectable,
-            args: [{
-                    providedIn: 'root'
-                }]
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "22.1.7", ngImport: i0, type: AuthenticationService, decorators: [{
+            type: Service
         }] });
 
 /*
